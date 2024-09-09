@@ -1,0 +1,109 @@
+﻿
+.tabla-celu caption {
+    font-size: 1.5em;
+    margin: .5em 0 .75em;
+}
+
+.tabla-celu tr {
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.tabla-celu th,
+.tabla-celu td {
+    padding: .625em;
+    border: 1px solid #ececec;
+}
+
+.achicar {
+    padding: .625em;
+    text-align: center;
+}
+
+.centrar-telefono {
+    text-align: center;
+}
+
+@media screen and (max-width: 990px) {
+    /*@media screen and (max-width: 1025px) {*/
+    .tabla-celu th,
+    .tabla-celu td {
+        border: none;
+    }
+
+    .centrar-telefono {
+        text-align: right;
+    }
+
+    .achicar {
+        padding: .625em;
+        text-align: right;
+    }
+
+    .buscarPersona {
+        margin-top: 20px;
+    }
+
+    .tabla-celu {
+        border: 0;
+    }
+
+        .tabla-celu caption {
+            font-size: 1.3em;
+        }
+
+        .tabla-celu thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        .tabla-celu tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: .625em;
+        }
+
+        .tabla-celu td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: .95em;
+            text-align: right;
+            height: 100%;
+            min-height: 30px;
+        }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    .tabla-celu td:before {
+        color: #696969;
+        font-size: .85em;
+        content: attr(data-label);
+        float: left;
+        font-weight: normal;
+        text-transform: uppercase;
+    }
+
+    .tabla-celu td:last-child {
+        border-bottom: 0;
+    }
+
+    .table-condensed tbody > tr > td {
+        padding-top: 7px;
+    }
+
+    .box {
+        box-shadow: none;
+    }
+
+    .btn-tabla {
+        margin-top: -7px;
+    }
+}

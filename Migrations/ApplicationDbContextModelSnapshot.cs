@@ -279,6 +279,9 @@ namespace Pasantia.Migrations
                     b.Property<string>("MarcaNombre")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProductoID")
+                        .HasColumnType("int");
+
                     b.HasKey("MarcaID");
 
                     b.ToTable("Marca");
@@ -305,6 +308,8 @@ namespace Pasantia.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ProductoID");
+
+                    b.HasIndex("MarcaID");
 
                     b.ToTable("Producto");
                 });
@@ -368,6 +373,22 @@ namespace Pasantia.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("Pasantia.Models.Producto", b =>
+                {
+                    b.HasOne("Pasantia.Models.Marca", "Marca")
+                        .WithMany("Producto")
+                        .HasForeignKey("MarcaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Marca");
+                });
+
+            modelBuilder.Entity("Pasantia.Models.Marca", b =>
+                {
                     b.Navigation("Producto");
                 });
 

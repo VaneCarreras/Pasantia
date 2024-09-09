@@ -8,15 +8,992 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
 html {
   position: relative;
   min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-color: #E8F6F3;
 }
+
+a {
+    color: #ffab9d;
+    text-decoration: none; /* Quitar el subrayado */
+}
+
+.titulosVistas {
+    background-repeat: no-repeat;
+    background-position: left top, right bottom, right bottom, 0px 0px;
+    background-size: 48% 3px, 3px 65%, 75% 3px, 100% 100%;
+    width: 350px;
+    height: 62px;
+    box-shadow: 10px 10px 0px rgb(50, 159, 177);
+    text-align: center;
+    line-height: 60px;
+    color: black;
+    position: relative;
+}
+
+    .titulosVistas::after {
+        content: "";
+        height: 3px;
+        width: 150px;
+        background: rgb(254, 216, 215);
+        position: absolute;
+        top: 70%;
+        left: 29%;
+        transition: 0.2s;
+        transform: scaleX(0);
+    }
+
+@media only screen and (max-width: 430px) {
+    h1 {
+        width: 100%;
+    }
+
+    body {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .titulosVistas {
+        width: 230px;
+        height: 55px;
+    }
+
+    .btnPosicion1 {
+        line-height: 42px;
+        width: 40px!important;
+        height: 40px!important;
+        bottom: 20px!important;
+        right: 5px!important;
+        font-size: 29px!important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    img, svg {
+        width: 100% !important;
+    }
+}
+
+
+/* ==========================================================================
+    Clases para el NAVBAR INTERNO
+========================================================================== */
+    .vistasElementosNav {
+        margin-top: 2px;
+        position: relative;
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: black !important;
+    }
+
+    .navbar-light .navbar-nav .nav-link:hover {
+        color: rgb(50, 159, 177) !important;
+    }
+
+    .navbar {
+        z-index: 1000;
+    }
+
+    .active {
+        color: rgb(50, 159, 177) !important;
+    }
+
+    .activeMenu {
+        display: block;
+        border-radius: 28px;
+        height: 37px;
+        transition: all 0.3s ease;
+        width: 100%;
+        background: rgb(50, 159, 177);
+        color: #fff !important;
+    }
+/* ==========================================================================
+    Clases para el BOT�N CERRAR SESI�N
+========================================================================== */
+    /*a .cerrarSesion:hover{
+      color: #fff;
+  }*/
+    .cerrarSesion {
+        position: relative;
+        margin: auto;
+        padding: 19px 22px;
+        transition: all 0.2s ease;
+    }
+
+        .cerrarSesion:before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 15px;
+            display: block;
+            border-radius: 28px;
+            /*background: #EF5350;*/
+            width: 30px;
+            height: 40px;
+            transition: all 0.3s ease;
+            color: #fff !important;
+        }
+
+        .cerrarSesion span {
+            position: relative;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #212F3D;
+        }
+
+            .cerrarSesion span:hover {
+                color: #fff;
+            }
+
+        .cerrarSesion:hover:before {
+            width: 80%;
+            background: #B71C1C;
+            color: #fff !important;
+        }
+
+        .cerrarSesion:active {
+            transform: scale(0.96);
+            color: #fff;
+        }
+
+/* ==========================================================================
+    Clases para los SWEET ALERT
+========================================================================== */
+    /* Botones */
+    .botonVerdeSweetAlert {
+        background-color: #378A60;
+        border-color: #0B7541;
+    }
+
+        .botonVerdeSweetAlert:active {
+            background-color: #378A60 !important;
+            border-color: #0B7541 !important;
+        }
+
+        .botonVerdeSweetAlert:hover {
+            background-color: #378A60 !important;
+            border-color: #0B7541 !important;
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(55 138 96 / 29%);
+        }
+
+        .botonVerdeSweetAlert:focus {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(55 138 96 / 29%);
+        }
+
+
+    .swal-footer {
+        background-color: rgb(245, 248, 250);
+        margin-top: 32px;
+        border-top: 1px solid #E9EEF1;
+        overflow: hidden;
+    }
+
+    .botonRojoSweetAlert {
+        color: #fff !important;
+        background-color: #A93226 !important;
+        border-color: #0B7541;
+    }
+
+        .botonRojoSweetAlert:active {
+            background-color: #A93226 !important;
+            border-color: #0B7541 !important;
+        }
+
+        .botonRojoSweetAlert:hover {
+            background-color: #A93226 !important;
+            border-color: #0B7541 !important;
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(55 138 96 / 29%);
+        }
+
+        .botonRojoSweetAlert:focus {
+            box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(242 215 213 / 29%);
+        }
+
+/* ==========================================================================
+    Clase para mostrar u Ocultar elementos
+========================================================================== */
+    .ocultar {
+        display: none !important;
+    }
+
+    .ocultarCarga {
+        display: none;
+    }
+
+    /* ==========================================================================*/
+    .margenInfIndex {
+        margin-bottom: 5rem; /* Ajusta la cantidad seg�n tus necesidades */
+    }
+
+    .box {
+        margin-bottom: 20px;
+        position: relative;
+        border-radius: .25rem; /* Bootstrap 5 utiliza unidades de rem */
+        border-top: 3px solid #d2d6de;
+        width: 100%;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+        background: #ffffff;
+    }
+
+/* ==========================================================================
+    Botones flotantes
+========================================================================== */
+    .btnPosicion1 {
+        width: 50px;
+        height: 50px;
+        padding: 0px;
+        border-radius: 50%;
+        position: fixed;
+        overflow: hidden;
+        text-align: center;
+        bottom: 45px;
+        right: 26px;
+        font-size: 33px;
+        z-index: 1;
+        box-shadow: 0px 0px 6px 5px #fff;
+        border: 0px;
+        justify-content: center;
+        color: #ffffff;
+        background: rgb(50, 159, 177);
+    }
+
+        .btnPosicion1:hover,
+        .btnPosicion1:focus,
+        .btnPosicion1:active,
+        .btnPosicion1.active,
+        .open .dropdown-toggle.btnPosicion1 {
+            color: #ffffff;
+            background-color: #239B56;
+            opacity: 0.9;
+            border: none;
+        }
+
+/* ==========================================================================
+    Clases para las tablas
+========================================================================== */
+    .tdBotones {
+        width: 40px; /* Puedes ajustar el porcentaje seg�n tus necesidades */
+        padding: 2px !important; /* Si es necesario mantener el !important para tus estilos espec�ficos */
+    }
+
+    .table {
+        background: #fff;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .table-bordered {
+        border: 1px solid #dee2e6;
+    }
+
+    .theadColor {
+        background-color: rgb(50, 159, 177);
+        color: #fff;
+    }
+
+    .table th, .table td {
+        padding: 3px;
+        vertical-align: top;
+        border-top: 1px solid #dee2e6;
+    }
+
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .table tbody + tbody {
+        border-top: 2px solid #dee2e6;
+    }
+
+    .table .table {
+        background-color: #fff;
+    }
+
+    #tabla tbody tr {
+        height: 20px; /* Ajusta el valor seg�n tus preferencias */
+    }
+
+    .elementosTabla {
+        font-size: 14px;
+        font-weight: bold;
+        text-transform: uppercase;
+        color: #212F3D;
+    }
+
+        .elementosTabla:hover {
+            color: #17A589;
+        }
+
+    .btnTablaEliminar {
+        color: #AEB6BF;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+        .btnTablaEliminar:hover {
+            color: #EC7063 !important;
+        }
+
+    .btnTablaHabilitar {
+        color: #AEB6BF;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+        .btnTablaHabilitar:hover {
+            color: #196F3D;
+        }
+
+    .btnAgregarCategoria {
+        color: #AEB6BF;
+        cursor: pointer;
+        font-size: 20px;
+    }
+
+        .btnAgregarCategoria:hover {
+            color: #3498DB !important;
+        }
+
+    .btnTablaImagen {
+        color: #AEB6BF;
+        cursor: pointer;
+        font-size: 18px;
+    }
+
+        .btnTablaImagen:hover {
+            color: #3498DB !important;
+        }
+
+    #tabla-container {
+        max-height: 609px; /* Establece la altura m�xima deseada */
+        overflow-y: auto; /* Agrega una barra de desplazamiento vertical cuando sea necesario */
+    }
+
+/* ==========================================================================
+    Clase para eliminar COLUMNAS de las TABLAS.
+========================================================================== */
+    @media (max-width: 1100px) {
+        .descarto1100 {
+            display: none;
+        }
+    }
+
+    @media (max-width: 990px) {
+        .descarto {
+            display: none;
+        }
+
+        .inputBuscar {
+            width: 95% !important;
+        }
+    }
+
+    @media (max-width: 800px) {
+
+        .panelBcoFondo {
+            min-height: 86vh;
+        }
+    }
+
+    @media (max-width: 766px) {
+
+        .panelBcoFondo {
+            height: 150vh !important;
+        }
+
+        .inputBuscar {
+            width: 95% !important;
+        }
+    }
+
+    @media (min-width: 551px) {
+        .mostrar550 {
+            display: none;
+        }
+
+        .panelTabla {
+            padding: 15px !important;
+        }
+    }
+
+    @media (max-width: 550px) {
+        .descarto550 {
+            display: none;
+        }
+
+        .col-12 {
+            width: 100% !important
+        }
+
+        .contenedor-etiquetas {
+            justify-content: flex-start;
+        }
+
+        .panelTabla {
+            padding: 15px !important;
+        }
+
+        .panelBcoFondo {
+            height: 150vh !important;
+        }
+
+        .activeMenu {
+            margin-left: 20px;
+            width: 35%;
+        }
+
+        .vistasElementosNav {
+            margin-left: 20px;
+        }
+
+        .navbar-nav .nav-link {
+            padding-left: 15px !important;
+        }
+
+        .navbar-collapse {
+            height: 168px;
+        }
+
+        .cerrarSesion {
+            position: absolute;
+        }
+
+            .cerrarSesion:before {
+                left: 8px !important;
+                width: 35px !important;
+                height: 35px !important;
+                margin-bottom: 10px !important;
+            }
+
+            .cerrarSesion span {
+                font-size: 12px;
+            }
+
+            .cerrarSesion:hover:before {
+                width: 87% !important;
+            }
+
+        .inputBuscar {
+            width: 92% !important;
+        }
+    }
+
+
+/* ==========================================================================
+    Clases para las Pesta�as
+========================================================================== */
+    .btn-ovalo {
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        background-color: transparent;
+        border: 2px solid rgb(50, 159, 177);
+        border-radius: 30px;
+        color: rgb(50, 159, 177);
+        padding: 5px 18px 4px 18px;
+        font-size: 13px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+        /* Ajustes para Bootstrap 5 */
+        .btn-ovalo:hover {
+            background-color: rgb(50, 159, 177);
+            color: #fff;
+        }
+
+    .btn-ovaloEliminar {
+        cursor: pointer;
+        display: inline-flex;
+        justify-content: center;
+        background-color: transparent;
+        border: 2px solid #B03A2E;
+        border-radius: 30px;
+        color: #B03A2E;
+        padding: 5px 18px 4px 18px;
+        font-size: 15px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+        .btn-ovaloEliminar:hover {
+            background-color: #B03A2E;
+            color: #fff;
+        }
+
+    .nav-tabs .nav-link {
+        color: black;
+        font-weight: 500;
+    }
+
+        .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+            background-color: rgb(50, 159, 177);
+            cursor: default;
+            font-weight: bold;
+            border: 1px solid rgb(50, 159, 177);
+            border-bottom-color: transparent;
+            color: #fff !important;
+        }
+
+    .panel-body {
+        padding: 15px;
+    }
+
+/* ==========================================================================
+    Estilo para etiquetas de control en formularios horizontalmente alineados
+========================================================================== */
+    .form-horizontal .form-label {
+        padding-top: 7px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    .form-label {
+        font-weight: bold;
+        margin-left: 12px;
+    }
+
+    .form-control {
+        /*margin-left: 10px!important;*/
+        display: block;
+        width: 100%;
+        height: calc(1.875rem + 2px); /* Bootstrap 5 utiliza unidades rem y ajusta la altura */
+        padding: 0.375rem 0.5rem; /* Ajuste seg�n la nueva proporci�n de Bootstrap 5 */
+        font-size: 15px;
+        line-height: 1.5;
+        color: #555;
+        background-color: #fff;
+        background-image: none;
+        border: 1px solid #ccc;
+        border-radius: 0.25rem; /* Bootstrap 5 utiliza unidades rem */
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    }
+
+    .inputBuscar {
+        margin-left: 18px !important;
+        width: 97%;
+    }
+
+/* ==========================================================================
+    Clases para los Modals
+========================================================================== */
+    .modal-header {
+        background-color: #EAEDED !important;
+    }
+
+    .modal-footer {
+        background-color: #EAEDED !important;
+    }
+
+    .cruzCerrar {
+        border: none;
+        background-color: transparent;
+        color: #95A5A6;
+        font-size: 23px;
+        font-weight: bold;
+    }
+
+        .cruzCerrar:hover {
+            color: #A93226;
+        }
+
+    .labelModal {
+        margin-left: 10px;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 7px;
+    }
+
+    .btnCancelarModal {
+        background-color: #A93226;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        border-radius: 7px;
+        font-weight: 600;
+        width: 100px;
+        height: 35px;
+    }
+
+        .btnCancelarModal:hover {
+            background-color: #E74C3C;
+        }
+
+    .btnGuardarModal {
+        background-color: #117A65;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        border-radius: 7px;
+        font-weight: 600;
+        width: 100px;
+        height: 35px;
+    }
+
+        .btnGuardarModal:hover {
+            background-color: #27AE60;
+        }
+
+    .btnEspereModal {
+        background-color: #85C1E9;
+        color: #fff;
+        font-size: 18px;
+        border: none;
+        border-radius: 7px;
+        font-weight: 600;
+        width: 100px;
+        height: 35px;
+    }
+
+    .requerido {
+        /*margin-left: 15px;*/
+        font-size: 13px;
+        font-weight: 500;
+        color: darkred;
+    }
+
+    .inputModalTexto {
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+    .elementosTablaTexto {
+        font-size: 13px;
+        font-weight: 500;
+        color: #424949;
+    }
+
+/* ==========================================================================
+    Clase para modificar el color de fondo de los Registros de las Tablas.
+========================================================================== */
+    .fondoRojoTabla {
+        background-color: rgba(241, 148, 138, 0.15) !important;
+    }
+
+        .fondoRojoTabla:first-child {
+            box-shadow: inset 3px 0 #ff0000;
+        }
+
+    .fondoNaranjaTabla {
+        background-color: rgba(183, 78, 0, 0.15) !important;
+    }
+
+        .fondoNaranjaTabla:first-child {
+            box-shadow: inset 3px 0 #ff851b;
+        }
+
+    .fondoVerdeTabla {
+        background-color: rgba(0, 138, 39, 0.15) !important;
+    }
+
+        .fondoVerdeTabla:first-child {
+            box-shadow: inset 3px 0 #008A27;
+        }
+
+    .fondoAmarilloTabla {
+        background-color: rgba(183, 168, 0, 0.20) !important;
+    }
+
+        .fondoAmarilloTabla:first-child {
+            box-shadow: inset 3px 0 #f39c12;
+        }
+
+    .fondoAzulTabla {
+        background-color: rgba(0, 115, 183, 0.15) !important;
+    }
+
+        .fondoAzulTabla:first-child {
+            box-shadow: inset 3px 0 #0073b7;
+        }
+
+    .fondoRosaTabla {
+        background-color: rgba(255,192,203, 0.30) !important;
+    }
+
+        .fondoRosaTabla:first-child {
+            box-shadow: inset 3px 0 #FFC0CB;
+        }
+
+    .fondoSalmonTabla {
+        background-color: rgba(254,195,172, 0.35) !important;
+    }
+
+        .fondoSalmonTabla:first-child {
+            box-shadow: inset 3px 0 #FEC3AC;
+        }
+
+    .fondoFucsiaTabla {
+        background-color: rgba(255,0,255, 0.15) !important;
+    }
+
+        .fondoFucsiaTabla:first-child {
+            box-shadow: inset 3px 0 #FF00FF;
+        }
+
+    .fondoBordoTabla {
+        background-color: rgba(150,0,0, 0.15) !important;
+    }
+
+        .fondoBordoTabla:first-child {
+            box-shadow: inset 3px 0 #960000;
+        }
+
+    .fondoGrisTabla {
+        background-color: rgba(128,128,128, 0.15) !important;
+    }
+
+        .fondoGrisTabla:first-child {
+            box-shadow: inset 3px 0 #808080;
+        }
+
+    .fondoOroTabla {
+        background-color: rgba(255,215,0, 0.15) !important;
+    }
+
+        .fondoOroTabla:first-child {
+            box-shadow: inset 3px 0 #FFD700;
+        }
+
+    .fondoAzulOscuroTabla {
+        background-color: rgba(0,0,128, 0.10) !important;
+    }
+
+        .fondoAzulOscuroTabla:first-child {
+            box-shadow: inset 3px 0 #000080;
+        }
+
+    .fondoTurquesaTabla {
+        background-color: rgba(48,213,200, 0.15) !important;
+    }
+
+        .fondoTurquesaTabla:first-child {
+            box-shadow: inset 3px 0 #30D5C8;
+        }
+
+    .fondoGrisFila_1 {
+        background-color: #ebebeb;
+    }
+
+    .fondoGrisFila_2 {
+        background-color: #dcdcdc;
+    }
+
+    .fondoGrisFila_3 {
+        background-color: #cecece;
+    }
+
+
+/* ==========================================================================
+    Clase para el buscador de las tablas en las vistas.
+========================================================================== */
+    #searchbox {
+        background: #eaf8fc;
+        background-image: -moz-linear-gradient(#fff, #d4e8ec);
+        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #d4e8ec),color-stop(1, #fff));
+        -moz-border-radius: 35px;
+        border-radius: 35px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #c4d9df #a4c3ca #83afb7;
+        width: 100%;
+        height: 52px;
+        padding: 10px;
+        /*margin: -7px auto 30px;*/
+        overflow: hidden;
+        margin-top: 20px;
+    }
+
+    #buscar, #submit {
+        float: left;
+    }
+
+    #buscar {
+        text-transform: uppercase;
+        text-align: justify;
+        padding: 2px 20px;
+        height: 30px;
+        width: 100%;
+        border: 1px solid #a4c3ca;
+        background: #f1f1f1;
+        -moz-border-radius: 50px 3px 3px 50px;
+        border-radius: 50px;
+        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+    }
+
+    /* ----------------------- */
+
+    #submit {
+        background: #6cbb6b;
+        background-image: -moz-linear-gradient(#95d788, #6cbb6b);
+        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #6cbb6b),color-stop(1, #95d788));
+        -moz-border-radius: 3px 50px 50px 3px;
+        border-radius: 3px 50px 50px 3px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: #7eba7c #578e57 #447d43;
+        -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+        -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
+        height: 35px;
+        margin: 0 0 0 10px;
+        padding: 0;
+        width: 90px;
+        cursor: pointer;
+        font: bold 14px Arial, Helvetica;
+        color: #23441e;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.5);
+    }
+
+        #submit:hover {
+            background: #95d788;
+            background-image: -moz-linear-gradient(#6cbb6b, #95d788);
+            background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #95d788),color-stop(1, #6cbb6b));
+        }
+
+        #submit:active {
+            background: #95d788;
+            outline: none;
+            -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+            -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
+        }
+
+        #submit::-moz-focus-inner {
+            border: none;
+        }
+
+    /* ----------------------- */
+
+    #buscar::-webkit-input-placeholder {
+        color: #9c9c9c;
+        font-style: italic;
+    }
+
+    #buscar:-moz-placeholder {
+        color: #9c9c9c;
+        font-style: italic;
+    }
+
+    #buscar.placeholder {
+        color: #9c9c9c !important;
+        font-style: italic;
+    }
+
+    #buscar:focus {
+        border-color: #8badb4;
+        background: #fff;
+        outline: none;
+    }
+
+/* ==========================================================================
+    Clase para el Component: alert Y MENSAJE DE ALERTA
+========================================================================== */
+    .alert {
+        border-radius: 3px;
+    }
+
+        .alert h4 {
+            font-weight: 600;
+        }
+
+        .alert .icon {
+            margin-right: 10px;
+        }
+
+        .alert .close {
+            color: #000;
+            opacity: 0.2;
+        }
+
+            .alert .close:hover {
+                opacity: 0.5;
+            }
+
+    .alert-danger .close {
+        color: #d73925 !important;
+        opacity: 1 !important;
+    }
+
+    .alert a {
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    .alert .mensajeDanger a {
+        color: #d73925;
+        text-decoration: underline;
+    }
+
+    .alert-success {
+        border-color: #008d4c;
+    }
+
+    .alert-danger,
+    .alert-error {
+        border-color: #d73925;
+    }
+
+    .alert-warning {
+        border-color: #e08e0b;
+    }
+
+    .alert-info {
+        border-color: #00acd6;
+    }
+
+    .alert.custom-alert {
+        position: fixed;
+        margin: 0;
+        bottom: 3.3rem;
+        z-index: 10;
+        width: 400px;
+        max-width: 75vw;
+        box-shadow: 0 2px 5px #ccc;
+        transition: transform .15s cubic-bezier(.95,.1,.59,.6);
+    }
+
+        .alert.custom-alert.ocultar {
+            display: block !important;
+            transform: translateY(calc(3.3rem + 100%));
+        }
+
+    .mensajeDanger {
+        position: relative;
+        color: #d73925;
+        background-color: bisque;
+        border: solid 1px;
+        border-radius: 5px;
+        margin: 10px 0;
+    }
+
+    .cerrarMsjError {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border: none;
+        background-color: transparent;
+        color: #d73925;
+        font-size: 23px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+        .cerrarMsjError:hover {
+            color: darkred !important;
+        }
+
+        .cerrarMsjError i.bi-x {
+            font-size: 1.2em;
+        }

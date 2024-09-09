@@ -1,0 +1,165 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Pasantia - Index</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    @* <link href="~/img/ElPaloLogoNegro-SinFondo.png" rel="icon"> *@
+    <!-- <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="~/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="~/vendor/aos/aos.css" rel="stylesheet">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="~/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="~/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="~/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    @* <link href="~/css/leaflet-1.9.4.css" rel="stylesheet" /> *@
+    <!-- Template Main CSS File -->
+    <link href="~/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+   
+     <!-- ======= Header ======= -->
+    <header id="header" class="fixed-top">
+        <div class="container d-flex align-items-center justify-content-between">
+
+            <h1 class="logo"><a href="~/Home/Index#hero"><img src="~/img/" /></a></h1>
+
+            @* <nav id="navbar" class="navbar">
+                
+                <ul> *@
+                    @* <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Hero" ? "active" : "")">
+                        <a class="nav-link scrollto" href="~/Home/Index#hero">Inicio</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["action"].ToString() == "About" ? "active" : "")">
+                        <a class="nav-link scrollto" href="~/Home/Index#about">¿Quienes Somos?</a>
+                    </li>
+                    <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Cta" ? "active" : "")">
+                        <a class="nav-link scrollto" href="~/Home/Catalogo#cta">Catálogo</a>
+                    </li>
+
+                    <li class="@(ViewContext.RouteData.Values["action"].ToString() == "Contact" ? "active" : "")">
+                        <a class="nav-link scrollto" href="~/Home/Index#contact">Contacto</a>
+                    </li> *@
+                 @* </ul>
+                <i class="bi bi-list mobile-nav-toggle"></i>
+                
+            </nav> *@
+            <!-- .navbar -->
+
+        </div>
+    </header>
+    <!-- End Header -->
+    @RenderBody()
+    <!-- ======= Footer ======= -->
+    <footer id="footer">
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row text-center">
+                    <div class="col-lg-4 col-md-6 mx-auto">
+                        <div class="footer-info">
+                            <h3></h3>
+                            <div class="social-links mt-3">
+                                <a href="https://www.facebook.com/" target="_blank" title="Ir a Facebook" class="facebook"><i class="bx bxl-facebook"></i></a>
+                                <a href="https://www.instagram.com/" target="_blank" title="Ir a Instagram" class="instagram"><i class="bx bxl-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span></span></strong>. Reservados todos los derechos
+            </div>
+            <div class="credits">
+                Diseñada por <a href="https://" style="font-weight: bold;" target="_blank">Vane</a>
+            </div>
+            <!-- Botón Ingresar para Loguearse -->
+            <div>
+                <a onclick="window.location='/Identity/Account/Login'" class="btnAdmin"><span>Ingresar</span><i class="bi bi-person-circle" style="margin-right: 5px;"></i></a>
+            </div>
+        </div>
+
+    </footer>
+    <!-- End Footer -->
+
+    <div id="preloader"></div>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+    <!-- BOTÓN WHATSAPP -->
+    <a href="https://api.whatsapp.com/send?text=Buen%20día%20quisiera%20consultar%20sobre%20&phone=543562502972"
+       class="whatsapp-button d-flex align-items-center justify-content-center" target="_blank" title="Envía un mensaje">
+        <i class="bi bi-whatsapp"></i>
+    </a>
+
+    <!-- Vendor JS Files -->
+    <script src="~/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="~/vendor/aos/aos.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="~/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="~/vendor/swiper/swiper-bundle.min.js"></script>
+
+     <script src="~/js/leaflet-1.9.4.js"></script> 
+    <!-- Template Main JS File -->
+    <script src="~/js/main.js"></script>
+
+     <script>
+
+        document.addEventListener('DOMContentLoaded', function () {
+            // Array con las ubicaciones y la información de la marca
+            var locations = [
+                {
+                    coordinates: [-30.71013964260489, -62.00385528798766],
+                    popupText: ''
+                },
+                {
+                    coordinates: [-30.726324393229994, -61.99535505977686],
+                    popupText: ''
+                }
+                // Agrega más ubicaciones si es necesario
+            ];
+
+            // Crea el mapa
+            var map = L.map('leaflet-map').setView([-32.7, -62.0], 14);
+            // var map = L.map('leaflet-map').setView(locations[0].coordinates, 13);
+
+            // Agrega un proveedor de mapas (puedes cambiar a otros proveedores)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+
+            // Itera sobre las ubicaciones y agrega las marcas al mapa con el ícono de Bootstrap
+            locations.forEach(function (location) {
+                L.marker(location.coordinates, { icon: L.divIcon({ className: 'bi bi-geo-alt-fill' }) }).addTo(map)
+                    .bindPopup(location.popupText)
+                    .openPopup();
+            });
+        });
+
+    </script> 
+
+    @RenderSection("Scripts", required: false)
+
+</body>
+
+
+</html>

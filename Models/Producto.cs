@@ -16,6 +16,8 @@ namespace Pasantia.Models
         public bool Eliminado { get; set; }
 
         public virtual ICollection<ImagenProducto> ImagenProducto {  get; set; }
+        public virtual Marca Marca { get; set; }
+
     }
 
 

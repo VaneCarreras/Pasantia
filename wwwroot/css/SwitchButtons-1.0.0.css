@@ -1,0 +1,102 @@
+﻿input[type=checkbox].switch {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+label.switch {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 60px;
+    height: 25px;
+    background: grey;
+    display: block;
+    border-radius: 100px;
+    position: relative;
+}
+
+    label.switch:after {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 15px;
+        height: 15px;
+        background: #fff;
+        border-radius: 90px;
+        transition: 0.3s;
+    }
+
+input:checked + label.switch {
+    background: rgba(73,168,68,1);
+}
+
+    input:checked + label.switch:after {
+        left: calc(100% - 5px);
+        transform: translateX(-100%);
+    }
+
+label.switch:active:after {
+    width: 30px;
+}
+
+
+
+/*SMALL SWITCH BUTTONS*/
+input[type=checkbox].smallswitch {
+    height: 0;
+    width: 0;
+    visibility: hidden;
+}
+
+label.smallswitch {
+    cursor: pointer;
+    text-indent: -9999px;
+    width: 37px;
+    height: 20px;
+    background: grey;
+    display: block;
+    border-radius: 1000px;
+    position: relative;
+    margin-bottom: 0px;
+    margin-left: auto;
+}
+
+    label.smallswitch:after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        left: 5px;
+        width: 12px;
+        height: 12px;
+        background: #fff;
+        border-radius: 90px;
+        transition: 0.3s;
+    }
+
+input:checked + label.smallswitch {
+    background: rgba(73,168,68,1);
+}
+
+    input:checked + label.smallswitch:after {
+        left: calc(100% - 3px);
+        transform: translateX(-100%);
+    }
+
+label.smallswitch:active:after {
+    width: 30px;
+}
+
+
+
+
+/*LABEL DEL CHECK*/
+.labelSuperiorSwitch {
+    font-size: 12px;
+    text-align: center;
+}
+
+input:disabled + label.smallswitch,
+input:disabled + label.switch {
+    cursor: not-allowed
+}

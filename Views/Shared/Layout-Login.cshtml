@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Pasantia</title>
+    <link href="~/css/ClasesLoguin.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light colorNav  box-shadow mb-3  ">
+            <div class="container">
+                <a class="navbar-brand " asp-area="" asp-controller="Home" asp-action="Index"><img src="~/img/ElPaloLogoNegro-SinFondo.png" class="img-fluid" width="120" alt="5px"></a>
+                <button type="button" onclick="window.location='/'" class="btn btn-outline-light" style="font-weight:bold">VOLVER</button>
+                @* <button onclick="window.location='/'" class="cerrarSesion form-inline nav-link">Inicio</button> *@
+            </div>
+        </nav>
+    </header>
+
+    <div class="container body-content mt-5">
+
+        @RenderBody()
+
+    </div>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/sweetalert.min.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
