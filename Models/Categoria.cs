@@ -16,5 +16,10 @@ namespace Pasantia.Models
         public bool Eliminado { get; set; }
     }
 
-    
+    public class CategoriaMostrar
+    {
+        public int CategoriaID { get; set; }
+        public string? CategoriaNombre { get; set; }
+        public int CantidadProducto { get; set; }
+    }
 }

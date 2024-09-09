@@ -1,0 +1,460 @@
+
+<div>
+    <section class="content-header">
+        <div class="row">
+            <div class="col-10">
+                <h2 class="titulosVistas">
+                    Categorías
+                </h2>
+            </div>
+            <div class="col-12">
+                <p id="searchbox" action="">
+                    <input type="text" id="buscar" placeholder="Escriba aquí para buscar">
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="content">
+
+        <a id="AgregarCategoria" onclick="AbrirModal()" class="btnPosicion1" style="cursor:pointer" title="Nueva Categoría">
+            <i class="bi bi-plus-circle"></i>
+        </a>
+
+        <div id="ErrorDeshabilitar" class="mensajeDanger ocultar">
+            <a onclick="QuitarMensaje()" class="cerrarMsjError" style="cursor: pointer;"><i class="bi bi-x"></i></a>
+            <strong style="margin-left: 15px;">Ud no posee autorización</strong>
+            <p style="margin-left: 15px;">"No se puede deshabilitar ya que posee productos en ella."</p>
+        </div>
+
+        <div id="tabla-container">
+            <table id="tabla" class="table table-hover table-bordered">
+                <thead class="theadColor">
+                    <tr>
+                        <th>Nombre de la Categoría</th>
+                        <th class="text-center tdBotones"></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody-categorias"></tbody>
+            </table>
+        </div>
+
+    </section>
+</div>
+
+@* *************************************************
+   VENTANA EMERGENTE CARGA Y EDICIÓN DE CATEGORÍAS
+ ************************************************* *@
+<div id="ModalCategoria" class="modal fade ModalCrearProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 10px !important;">
+                <h5 class="modal-title" id="exampleModalScrollableTitle"></h5>
+                <button type="button" class="cruzCerrar" data-dismiss="modal" aria-label="Close" onclick="LimpiarModal();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="CategoriaID" value="0" />
+                <form class="form-horizontal form-articulo-factura" role="form" style="margin-top:0px">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="CategoriaNombre" class="control-label labelModal">Nombre de la Categoría</label>
+                                <input style="text-transform:uppercase;" onclick="this.select()" class="form-control inputModalTexto" id="CategoriaNombre" name="CategoriaNombre" autocomplete="off" autofocus>
+                                <span type="text" id="error_CategoriaNombre" class="ocultar requerido"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="button" onclick="LimpiarModal();" id="btn-cancelar" class="btnCancelarModal" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btn-guardar" class="btnGuardarModal">Guardar</button>
+                    <button type="button" id="btn-espere-modal" class="btnEspereModal ocultar" disabled>Guardando...</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* *************************************************
+   FIN VENTANA EMERGENTE CARGA Y EDICIÓN DE CATEGORÍAS
+************************************************* *@
+
+@section Scripts{
+    <script language="javascript">
+        function PulsarTecla(event) {
+            tecla = event.keyCode;
+
+            if (tecla == 107 && event.altKey) {
+                document.getElementById("AgregarCategoria").click();
+            }
+        }
+
+        window.onkeydown = PulsarTecla;
+
+        // FUNCION QUE EVITA QUE GUARDE TODO AL PRESIONAR ENTER. (SE USA SOBRE TODO POR EL LECTOR DE CODIGO DE BARRAS).
+        window.onkeydown = EvitarEnter;
+        function EvitarEnter(e) {
+            // averiguamos el código de la tecla pulsada (keyCode para IE y which para Firefox)
+            tecla = (document.all) ? e.keyCode : e.which;
+            // si la tecla no es 13 devuelve verdadero,  si es 13 devuelve false y la pulsación no se ejecuta
+            return (tecla != 13);
+        }
+    </script>
+
+    <script>
+        //*************************************
+        //FUNCIÓN PARA LIMPIAR EL MSJ DE ERROR
+        //*************************************
+        function QuitarMensaje() {
+            $('#ErrorDeshabilitar').addClass('ocultar');
+        }
+
+        document.querySelector("#buscar").onkeyup = function () {
+            $TableFilter("#tabla", this.value);
+        }
+
+        $TableFilter = function (id, value) {
+            var rows = document.querySelectorAll(id + ' tbody tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                var showRow = false;
+
+                var row = rows[i];
+                //row.style.display = 'none';
+                row.classList.add('ocultar');
+
+                for (var x = 0; x < row.childElementCount; x++) {
+                    if (row.children[x].textContent.toLowerCase().indexOf(value.toLowerCase().trim()) > -1) {
+                        showRow = true;
+                        break;
+                    }
+                }
+
+                if (showRow) {
+                    //row.style.display = null;
+                    row.classList.remove('ocultar');
+                }
+            }
+        }
+
+        //*****************************************
+        //FUNCIÓN PARA DESHABILITAR LAS CATEGORÍAS
+        //*****************************************
+        function DeshabilitarCategoria(CategoriaID) {
+            swal({
+                title: "ATENCIÓN",
+                icon: "warning",
+                text: "¿Deshabilitar Categoría?",
+
+                dangerMode: true,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+
+                buttons: {
+                    cancel: {
+                        text: "Cancelar",
+                        value: null,
+                        visible: true,
+                        className: "botonRojoSweetAlert",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Aceptar",
+                        value: true,
+                        visible: true,
+                        className: "botonVerdeSweetAlert",
+                        closeModal: true
+                    }
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            type: "POST",
+                            url: '../../Categorias/DeshabilitarCategoria',
+                            data: { id: CategoriaID },
+                            success: function (data) {
+                                QuitarMensaje();
+                                if (data == 0) {
+                                    $("#ErrorDeshabilitar").removeClass("ocultar");
+                                }
+                                else {
+                                    location.href = "../../Categorias/Index";
+                                }
+                            },
+                            error: function (result) {
+                            }
+                        });
+                    }
+                    else { }
+                });
+        }
+
+        //*************************************
+        //FUNCIÓN PARA HABILITAR LAS CATEGORÍAS
+        //*************************************
+        function HabilitarCategoria(CategoriaID) {
+            swal({
+                title: "ATENCIÓN",
+                icon: "warning",
+                text: "¿Habilitar Categoría?",
+
+                dangerMode: true,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+
+                buttons: {
+                    cancel: {
+                        text: "Cancelar",
+                        value: null,
+                        visible: true,
+                        className: "botonRojoSweetAlert",
+                        closeModal: true,
+                    },
+                    confirm: {
+                        text: "Aceptar",
+                        value: true,
+                        visible: true,
+                        className: "botonVerdeSweetAlert",
+                        closeModal: true
+                    }
+                },
+            })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        location.href = "../../Categorias/HabilitarCategoria/" + CategoriaID;
+                    }
+                });
+        }
+    </script>
+
+    <script>
+        window.onload = BuscarCategorias();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            $('#buscar').on('keyup', () => {
+                if (document.querySelector('#myTable').querySelectorAll('.ocultar').length === document.querySelector('#myTable').childElementCount) $('.agregar-busqueda').removeClass('ocultar');
+                else $('.agregar-busqueda').addClass('ocultar');
+            });
+            let btnGuardar = document.querySelector('#btn-guardar');
+            btnGuardar.addEventListener('click', GuardarCategoria);
+        });
+
+        //*******************************************************
+        //FUNCIÓN PARA ABRIR EL MODAL DE CREAR O EDITAR CATEGORÍA
+        //*******************************************************
+        function AbrirModal(param = 0) {
+            //param === 0: Crear
+            //param !== 0: Editar
+            //console.log(param, ' Typeof:', typeof param)
+            let tituloModal = document.querySelector('#exampleModalScrollableTitle');
+
+            if (param === 0) {
+                tituloModal.textContent = 'Crear Categoría';
+                $('CategoriaNombre').val($('#buscar').val());
+                $('#CategoriaID').val(0);
+
+            }
+            else {
+                tituloModal.textContent = 'Editar Categoría';
+                $('#CategoriaNombre').attr('disabled', true);
+                $('#CategoriaID').val(param);
+
+                BuscarCategoria();
+            }
+            setTimeout(function () { $("#CategoriaNombre").focus(); }, 500);
+            $('#ModalCategoria').modal('show');
+        }
+
+
+        //***************************************************
+        //FUNCIÓN PARA BUSCAR LAS CATEGORÍAS
+        //***************************************************
+
+        function BuscarCategorias() {
+            $("#tbody-categorias").empty();
+            $.ajax({
+                type: "POST",
+                url: '../../Categorias/BuscarTodasCategorias',
+                data: {},
+                success: function (categoriasMostrar) {
+                    $("#tbody-categorias").empty();
+                    $.each(categoriasMostrar, function (index, categoria) {
+
+                        let claseEliminado = '';
+                        let habilitarDeshabilitar = '<td class="text-center tdBotones"><a onclick = "DeshabilitarCategoria(' + categoria.categoriaID + ')" class="btn-tabla" title = "Deshabilitar" ><i class="bi bi-trash btnTablaEliminar"></i></a ></td>';
+                        if (categoria.eliminado == true) {
+                            claseEliminado = 'fondoRojoTabla';
+                            habilitarDeshabilitar = '<td class="text-center tdBotones fondoRojoTabla"><a onclick="HabilitarCategoria(' + categoria.categoriaID + ')" class="btn-tabla" title="Habilitar"><i class="bi bi-check-lg btnTablaHabilitar"></i></a></td>';
+                        }
+
+                        $("#tbody-categorias").append('<tr class=' + claseEliminado + '>' +
+                            '<td class="' + claseEliminado + '"><a onclick="AbrirModal(' + categoria.categoriaID + ')" class="elementosTabla" style="cursor:pointer" title="Editar Categoría">' + categoria.categoriaNombre + '</td>' +
+                            habilitarDeshabilitar +
+                            '</tr>');
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                    swal({
+                        title: "ATENCIÓN",
+                        icon: "error",
+                        text: "Error al cargar la vista de Categorías.",
+
+                        dangerMode: true,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+
+                        buttons: {
+                            confirm: {
+                                text: "Aceptar",
+                                value: true,
+                                visible: true,
+                                className: "botonRojoSweetAlert",
+                                closeModal: true
+                            }
+                        },
+                    }).then(res => location.assign('/Categorias/Index'));
+                }
+            });
+        }
+
+        //*************************************
+        //FUNCIÓN PARA GUARDAR Y GUARDAR-EDITAR LA CATEGORÍA
+        //*************************************
+        function GuardarCategoria() {
+
+            $('#btn-guardar').addClass('ocultar');
+            $('#btn-espere-modal').removeClass('ocultar');
+            $('#btn-cancelar').attr('disabled', true);
+
+            let categoriaNombre = $('#CategoriaNombre').val();
+            let categoriaID = $('#CategoriaID').val();
+
+            //console.log('ActividadID:', actividadID, typeof actividadID)
+            if (categoriaID === "0") {
+                $.ajax({
+                    url: '../../Categorias/GuardarCategoria',
+                    type: 'POST',
+                    data: { CategoriaNombre: categoriaNombre },
+                    success: function (res) {
+                        //console.log(res);
+                        res.forEach(i => {
+                            if (i === 'correcto') {
+                                LimpiarModal();
+                                return location.href = '../../Categorias/Index';
+                            }
+                            if (i.includes('error_CategoriaNombre')) {
+                                if (i === 'error_CategoriaNombre') texto = '*Campo Requerido.';
+                                else if (i === 'error_CategoriaNombre_existe') texto = 'Ya existe una Categoría con el mismo Nombre.';
+                                document.querySelector(`#error_CategoriaNombre`).textContent = texto;
+                                document.querySelector(`#error_CategoriaNombre`).classList.remove('ocultar');
+                                LimpiarMsjError();
+
+                                $('#btn-guardar').removeClass('ocultar');
+                                $('#btn-espere-modal').addClass('ocultar');
+                                $('#btn-cancelar').attr('disabled', false);
+                            }
+
+                        });
+                    }
+                });
+            }
+            else {
+                $.ajax({
+                    url: '../../Categorias/GuardarEditarCategoria',
+                    type: 'POST',
+                    data: { CategoriaID: categoriaID, CategoriaNombre: categoriaNombre },
+                    success: function (res) {
+                        //console.log(res);
+                        if (res.length > 0) {
+                            let texto = '';
+                            res.forEach(i => {
+                                if (i === 'correcto') {
+                                    LimpiarModal();
+                                    return location.href = '../../Categorias/Index';
+                                }
+                                if (i.includes('error_CategoriaNombre')) {
+                                    if (i === 'error_CategoriaNombre') texto = '*Campo Requerido.';
+                                    else if (i === 'error_CategoriaNombre_existe') texto = 'Ya existe una Categoría con el mismo Nombre.';
+                                    document.querySelector(`#error_CategoriaNombre`).textContent = texto;
+                                    document.querySelector(`#error_CategoriaNombre`).classList.remove('ocultar');
+                                    LimpiarMsjError();
+
+                                    $('#btn-guardar').removeClass('ocultar');
+                                    $('#btn-espere-modal').addClass('ocultar');
+                                    $('#btn-cancelar').attr('disabled', false);
+                                }
+                            });
+                        }
+                        else {
+                            LimpiarModal();
+                            $('#btn-guardar').removeClass('ocultar');
+                            $('#btn-espere-modal').addClass('ocultar');
+                            $('#btn-cancelar').attr('disabled', false);
+                        }
+                    }
+                });
+            }
+        }
+
+        //*******************************************************************
+        //FUNCIÓN PARA BUSCAR LA INFO DE LA CATEGORÍA CUANDO QUEREMOS EDITAR
+        //*******************************************************************
+        function BuscarCategoria() {
+
+            let categoriaID = document.querySelector('#CategoriaID').value;
+            $.ajax({
+                url: '../../Categorias/BuscarCategoria',
+                type: 'POST',
+                data: { CategoriaID: categoriaID },
+                success: function (res) {
+                    //console.log(res);
+                    $('#CategoriaNombre').val(res.categoriaNombre);
+                    $('#CategoriaNombre').attr('disabled', false);
+                    $('#CategoriaID').val(res.categoriaID);
+                }
+            });
+        }
+
+        //***************************************************
+        //FUNCIÓN PARA LIMPIAR EL MODAL AL CERRAR O CANCELAR
+        //***************************************************
+        $('#ModalCategoria').on('hidden.bs.modal', LimpiarModal);
+        function LimpiarModal() {
+            $('#ModalCategoria').modal('hide');
+            $('#CategoriaNombre').val('');
+            $('#CategoriaNombre').attr('disabled', false);
+            $('#CategoriaID').val(0);
+
+            $('#btn-guardar').removeClass('ocultar');
+            $('#btn-espere-modal').addClass('ocultar');
+            $('#btn-cancelar').attr('disabled', false);
+            document.querySelectorAll('span[id^="error_"]').forEach(i => {
+                i.textContent = '';
+                i.classList.add('ocultar');
+            });
+        }
+
+        //*************************************************
+        //FUNCIÓN PARA LIMPIAR LOS MSJS DE ERROR DEL MODAL
+        //*************************************************
+        function LimpiarMsjError() {
+            document.querySelectorAll('span[id^="error_"]').forEach(i => {
+                if (i.textContent !== '') {
+                    i.previousElementSibling.addEventListener('keyup', () => {
+                        i.textContent = '';
+                        i.classList.add('ocultar');
+                    });
+                }
+            })
+        }
+
+    </script>
+
+    }
