@@ -10,9 +10,8 @@ namespace Pasantia.Models
         public string? MarcaNombre { get; set; }
 
         public bool Eliminado { get; set; }
-        public int ProductoID { get; set; }
 
-        public virtual ICollection<Producto> Producto { get; set; }
+        public virtual ICollection<Producto> Productos { get; set; }
     }
 
     public class MarcaMostrar

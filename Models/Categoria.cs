@@ -14,6 +14,8 @@ namespace Pasantia.Models
         public string? CategoriaNombre { get; set; }
 
         public bool Eliminado { get; set; }
+
+        public virtual ICollection<Producto> Productos { get; set; }
     }
 
     public class CategoriaMostrar
@@ -21,5 +23,11 @@ namespace Pasantia.Models
         public int CategoriaID { get; set; }
         public string? CategoriaNombre { get; set; }
         public int CantidadProducto { get; set; }
+    }
+
+    public class ProductoCategoria
+    {
+        public int CategoriaID {get; set; }
+        public int ProductoID { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace Pasantia.Controllers
 
         public JsonResult BuscarTodasMarcas()
         {
-            var marcas = _context.Marca.Include(c => c.Producto).ToList();
+            var marcas = _context.Marca.ToList();
             List<MarcaMostrar> marcasMostrar = new List<MarcaMostrar>();
             foreach (var marca in marcas.OrderBy(c => c.MarcaNombre))
             {
@@ -43,7 +43,7 @@ namespace Pasantia.Controllers
                     MarcaID = marca.MarcaID,
                     MarcaNombre = marca.MarcaNombre,
                     Eliminado = marca.Eliminado,
-                    CantidadProductos = marca.Producto.Count
+                    //CantidadProductos = marca.Producto.Count
                 };
                 marcasMostrar.Add(marcaMostrar);
             }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pasantia.Data;
 
@@ -11,9 +12,11 @@ using Pasantia.Data;
 namespace Pasantia.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240911120324_QuitarCampoProductoEnMarca")]
+    partial class QuitarCampoProductoEnMarca
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -384,7 +387,7 @@ namespace Pasantia.Migrations
                         .IsRequired();
 
                     b.HasOne("Pasantia.Models.Marca", "Marca")
-                        .WithMany("Productos")
+                        .WithMany("Producto")
                         .HasForeignKey("MarcaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -401,7 +404,7 @@ namespace Pasantia.Migrations
 
             modelBuilder.Entity("Pasantia.Models.Marca", b =>
                 {
-                    b.Navigation("Productos");
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Pasantia.Models.Producto", b =>

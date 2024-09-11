@@ -14,5 +14,9 @@ namespace Pasantia.Models
         public virtual Producto Producto { get; set; }
     }
 
-    
+    public class VistaImagenProducto
+    {
+        public int ImgProductosID { get; set; }
+        public string? Base64 { get; set; }
+    }
 }
