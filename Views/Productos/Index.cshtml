@@ -38,9 +38,7 @@
             <thead class="theadColor">
                 <tr>
                     <th>Descripción</th>
-                    <th class="descarto550 descarto">Código</th>
                     <th>Marca</th>
-                    <th class="descarto550 descarto">Detalle</th>
                     <th class="text-center tdBotones"></th>
                     <th class="text-center tdBotones"></th>
                     <th class="text-center tdBotones"></th>
@@ -78,17 +76,9 @@
                                 <span type="text" id="error_ProductoNombre" class="ocultar requerido"></span>
                             </div>
 
-                            <div class="col-md-3 col-sm-6 col-xs-6 mb-3">
-                                <label class="control-label labelModal">Código</label>
-                                <input class="form-control inputModalTexto" type="text" id="Codigo" onClick="this.select()" autocomplete="off" style="text-transform:uppercase;" />
-                            </div>
                             <div class="col-md-4 col-sm-6 col-xs-6 mb-3">
                                 <label class="control-label labelModal">Marca</label>
                                 @Html.DropDownList("MarcaID", null, htmlAttributes: new { @class = "form-control inputModalTexto", style = "cursor:pointer;text-align: justify;padding-top: 3px;"})
-                            </div>
-                            <div class="col-md-12 mb-3">
-                                <label class="control-label labelModal">Detalle</label>
-                                <input class="form-control inputModalTexto" type="text" id="Detalle" onClick="this.select()" autocomplete="off" style="text-transform:uppercase;" />
                             </div>
 
                         </div>
@@ -414,9 +404,7 @@
                 tituloModal.textContent = 'Crear Producto';
                 $('Descripcion').val($('#buscar').val());
                 $('#ProductoID').val(0);
-                $('#Codigo').val("");
                 $('#MarcaID').val(0);
-                $('#Detalle').val("");
             }
             else {
                 tituloModal.textContent = 'Editar Producto';
@@ -448,9 +436,7 @@
 
                         $("#tbody-productos").append('<tr>' +
                             '<td><a onclick="AbrirModal(' + producto.productoID + ')" class="elementosTabla" style="cursor:pointer" title="Editar Producto">' + producto.descripcion + '</td>' +
-                            '<td class="elementosTablaTexto descarto550 descarto" style="text-transform:uppercase;">' + producto.codigo + '</td>' +
                             '<td class="elementosTablaTexto" style="text-transform:uppercase;">' + producto.marcaNombre + '</td>' +
-                            '<td class="elementosTablaTexto descarto550 descarto" style="text-transform:uppercase;">' + producto.detalle + '</td>' +
                             btnAgregarCategoria +
                             btnImgProducto +
                             btnEliminar +
@@ -483,39 +469,27 @@
         }
     
         //*************************************************
-        //FUNCIÓN PARA GUARDAR Y GUARDAR-EDITAR EL PRODUCTO.
+        //FUNCIÓN PARA GUARDAR Y GUARDAR-EDITAR EL PRODUCTO.hastahastahastajastahastahastahastahsasta
         //**************************************************
-        @* function GuardarProducto() {
+        function GuardarProducto() {
             $('#btn-guardar').addClass('ocultar');
             $('#btn-espere-modal').removeClass('ocultar');
             $('#btn-cancelar').attr('disabled', true);
 
             let descripcion = $('#Descripcion').val();
             let productoID = $('#ProductoID').val();
-            let codigo = $('#Codigo').val();
             let marcaID = $('#MarcaID').val();
-            let detalle = $('#Detalle').val();
 
             let guardarProducto = true;
 
-            if (estado < 1 || estado > 5) {
-                guardarProducto = false;
-                $('#error_Estado').removeClass("ocultar");
-
-                $('#btn-guardar').removeClass('ocultar');
-                $('#btn-espere-modal').addClass('ocultar');
-                $('#btn-cancelar').attr('disabled', false);
-            }
-
             if (guardarProducto == true) {
-                console.log('Estado:', estado)
+                
                 if (productoID === "0") {
                     $.ajax({
                         url: '../../Productos/GuardarProducto',
                         type: 'POST',
                         data: {
-                            Descripcion: descripcion, Codigo: codigo, CondicionProducto: condicionProducto, MarcaID: marcaID,
-                            Estado: estado, Detalle: detalle
+                            Descripcion: descripcion, MarcaID: marcaID
                         },
                         success: function (res) {
                             //console.log(res);
@@ -540,13 +514,13 @@
                         }
                     });
                 }
+
                 else {
                     $.ajax({
                         url: '../../Productos/GuardarEditarProducto',
                         type: 'POST',
                         data: {
-                            ProductoID: productoID, Descripcion: descripcion, Codigo: codigo, CondicionProducto: condicionProducto,
-                            MarcaID: marcaID, Estado: estado, Detalle: detalle
+                            ProductoID: productoID, Descripcion: descripcion, MarcaID: marcaID
                         },
                         success: function (res) {
                             //console.log(res);
@@ -597,11 +571,7 @@
                     $('#Descripcion').val(res.descripcion);
                     $('#Descripcion').attr('disabled', false);
                     $('#ProductoID').val(res.productoID);
-                    $('#Codigo').val(res.codigo);
-                    $('#CondicionProductoID').val(res.condicionProducto);
                     $('#MarcaID').val(res.marcaID);
-                    $('#Estado').val(res.estado);
-                    $('#Detalle').val(res.detalle);
                 }
             });
         }
@@ -615,11 +585,7 @@
             $('#Descripcion').val('');
             $('#Descripcion').attr('disabled', false);
             $('#ProductoID').val(0);
-            $('#Codigo').val("");
-            $('#CondicionProductoID').val(0);
             $('#MarcaID').val(0);
-            $('#Estado').val("");
-            $('#Detalle').val("");
 
             $('#btn-guardar').removeClass('ocultar');
             $('#btn-espere-modal').addClass('ocultar');
@@ -681,7 +647,7 @@
 
                     $.each(categoriasMostrar, function (index, item) {
 
-                        let btnQuitarCategoria = '<td class="text-center tdBotones"><a onclick = "EliminarCategoria(' + item.productoCategoriaID + ')" class="btn-tabla" title = "Quitar" ><i class="bi bi-trash3-fill btnTablaEliminar"></i></a></td>';
+                        let btnQuitarCategoria = '<td class="text-center tdBotones"><a onclick = "EliminarCategoria(' + item.CategoriaID + ')" class="btn-tabla" title = "Quitar" ><i class="bi bi-trash3-fill btnTablaEliminar"></i></a></td>';
 
                         $("#tbody-categorias").append("<tr>" +
 
@@ -842,7 +808,7 @@
                     swal({
                         title: "ATENCIÓN",
                         icon: "error",
-                        text: "Ocurrio un error al Guardar o llego al limite de 3 Imagenes por Producto, pruebe nuevamente más tarde o Elimine alguna Imagen!",
+                        text: "Ocurrio un error al Guardar",
 
                         dangerMode: true,
                         closeOnClickOutside: false,
@@ -916,13 +882,13 @@
         //****************************************************
         //FUNCIÓN PARA ELIMINAR LA IMAGEN ASOCIADA AL PRODUCTO
         //****************************************************
-        function EliminarImagen(ImgProductosID) {
+        function EliminarImagen(ImagenProductosID) {
             var productoID = $("#ProductoID").val();
 
             $.ajax({
                 url: "../../Productos/EliminarImagenProducto",
                 type: "POST",
-                data: { ImgProductosID: ImgProductosID },
+                data: { ImagenProductosID: ImagenProductosID },
                 success: function (resultado) {
 
                     VaciarCampoImagen();
@@ -948,7 +914,7 @@
         function CerrarCargaImagen() {
             $('#ModalMostrarSubirImagenes').modal('hide');
         }
-*@
+
     </script>
 
     }  
