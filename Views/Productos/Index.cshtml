@@ -1,0 +1,954 @@
+<link href="~/Fotorama/fotorama.4.6.4.css" rel="stylesheet" />
+<link href="~/css/CortarImagenesProductos.css" rel="stylesheet" />
+
+<div>
+    <section class="content-header">
+        <div class="row">
+            <div class="col-10">
+                <h2 class="titulosVistas">
+                    Productos
+                </h2>
+            </div>
+            <div class="col-12">
+                <p id="searchbox" action="">
+                    <input type="text" id="buscar" placeholder="Escriba aquí para buscar">
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="content">
+
+        <a id="AgregarProducto" onclick="AbrirModal()" class="btnPosicion1" style="cursor:pointer" title="Nuevo Producto">
+            <i class="bi bi-plus-circle"></i>
+        </a>
+
+        <div id="ErrorDeshabilitar" class="alert alert-danger text-center ocultar" style="font-size:16px;">
+            <div class="text-right" style="margin-top:-5px ;margin-bottom:-15px; cursor:pointer">
+                <a onclick="QuitarMensaje()"><i class="glyphicon glyphicon-remove text-red"></i></a>
+            </div>
+            <div class="mensajeDanger">
+                <strong>Ud no posee autorización para realizar esta acción.</strong>
+                <hr style="border-color:transparent; margin-top:-15px" />
+                <p>"No se puede deshabilitar esta Categoría porque posee Productos relacionadoss."</p>
+            </div>
+        </div>
+
+        <div id="tabla-container">
+        <table id="tabla" class="table table-hover table-bordered table-condensed">
+            <thead class="theadColor">
+                <tr>
+                    <th>Descripción</th>
+                    <th class="descarto550 descarto">Código</th>
+                    <th>Marca</th>
+                    <th class="descarto550 descarto">Detalle</th>
+                    <th class="text-center tdBotones"></th>
+                    <th class="text-center tdBotones"></th>
+                    <th class="text-center tdBotones"></th>
+                </tr>
+            </thead>
+            <tbody id="tbody-productos"></tbody>
+        </table>
+        </div>
+
+    </section>
+</div>
+
+@* *************************************************
+  VENTANA EMERGENTE CARGA Y EDICIÓN DE PRODUCTOS
+ ************************************************* *@
+<div id="ModalProducto" class="modal fade ModalCrearProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 10px !important;">
+                <h5 class="modal-title" id="exampleModalScrollableTitle"></h5>
+                <button type="button" class="cruzCerrar" data-dismiss="modal" aria-label="Close" onclick="LimpiarModal();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="ProductoID" value="0" />
+                <form class="form-horizontal form-articulo-factura" role="form" style="margin-top:0px">
+                    <div class="form-group">
+                        <div class="row">
+
+                            <div class="col-md-9 col-sm-12 col-xs-12 mb-3">
+                                <label for="Descripcion" class="control-label labelModal">Descripción</label>
+                                <input style="text-transform:uppercase;" onclick="this.select()" class="form-control inputModalTexto" placeholder="[Nombre del Producto]" id="Descripcion" name="Descripcion" autocomplete="off" autofocus>
+                                <span type="text" id="error_ProductoNombre" class="ocultar requerido"></span>
+                            </div>
+
+                            <div class="col-md-3 col-sm-6 col-xs-6 mb-3">
+                                <label class="control-label labelModal">Código</label>
+                                <input class="form-control inputModalTexto" type="text" id="Codigo" onClick="this.select()" autocomplete="off" style="text-transform:uppercase;" />
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-6 mb-3">
+                                <label class="control-label labelModal">Marca</label>
+                                @Html.DropDownList("MarcaID", null, htmlAttributes: new { @class = "form-control inputModalTexto", style = "cursor:pointer;text-align: justify;padding-top: 3px;"})
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <label class="control-label labelModal">Detalle</label>
+                                <input class="form-control inputModalTexto" type="text" id="Detalle" onClick="this.select()" autocomplete="off" style="text-transform:uppercase;" />
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <div class="text-center">
+                    <button type="button" onclick="LimpiarModal();" id="btn-cancelar" class="btnCancelarModal" data-dismiss="modal">Cancelar</button>
+                    <button type="button" id="btn-guardar" class="btnGuardarModal">Guardar</button>
+                    <button type="button" id="btn-espere-modal" class="btnEspereModal ocultar" disabled>Guardando...</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@* *************************************************
+     FIN VENTANA EMERGENTE CARGA Y EDICIÓN DE PRODUCTO
+  ************************************************* *@
+
+@* *************************************************
+     VENTANA EMERGENTE MUESTRA Y CARGA DE IMAGENES
+     hastajasrahastajastahastahastahasta
+  ************************************************* *@
+<div id="ModalMostrarSubirImagenes" class="modal fade MostrarSubirImagenes" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Imágenes del Producto</h5>
+                <button type="button" onclick="CerrarCargaImagen();" class="cruzCerrar" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <input type="hidden" id="ProductoID" value="0" />
+
+            <div class="modal-body">
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab_1">
+                        <div class="nav nav-tabs" id="myTabs" role="tablist">
+                            <a class="nav-link active" id="tab_1_1-tab" data-bs-toggle="tab" href="#tab_1_1" role="tab" aria-controls="tab_1_1" aria-selected="true">Visualizar</a>
+                            <a class="nav-link" id="tab_1_2-tab" data-bs-toggle="tab" href="#tab_1_2" role="tab" aria-controls="tab_1_2" aria-selected="false">Agregar</a>
+                            <a class="nav-link" id="tab_1_3-tab" data-bs-toggle="tab" href="#tab_1_3" role="tab" aria-controls="tab_1_3" aria-selected="false">Eliminar</a>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active" id="tab_1_1" role="tabpanel" aria-labelledby="tab_1_1-tab">
+                                <div>
+                                    <div id="ImagenesProducto"></div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab_1_2" role="tabpanel" aria-labelledby="tab_1_2-tab">
+                                <div>
+                                    <input type="hidden" class="form-control" name="image" id="image" />
+                                    <div class="panel-body">
+                                        <div style="margin-bottom: 15px;">
+                                            <input type="file" class="js-loadfile" accept="image/x-png,image/gif,image/jpeg" value="Upload" />
+                                        </div>
+                                        <div class="crop-wrapper">
+                                            <div class="top-overlay"></div>
+                                            <div class="right-overlay"></div>
+                                            <div class="bottom-overlay"></div>
+                                            <div class="left-overlay"></div>
+
+                                            <div class="overlay">
+                                                <div class="overlay-inner"></div>
+                                            </div>
+
+                                            <img class="resize-image" alt="Imagen a cortar" />
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom:10px; margin-left:10px; text-align:center;">
+                                        <button id="volver-cortar" class="btn btn-ovalo js-reset">Reiniciar</button>
+                                        <button id="cortar" class="btn btn-ovalo js-crop">Cortar</button>
+                                        <button onclick="GuardarImagen();" class="btn btn-ovalo" type="button">Guardar</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="tab_1_3" role="tabpanel" aria-labelledby="tab_1_3-tab">
+                                <div>
+                                    <table id="ImagenesProductoEliminar"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+@* *************************************************
+    FIN VENTANA EMERGENTE MUESTRA Y CARGA DE IMAGENES
+  ************************************************* *@
+
+
+@* *************************************************
+     VENTANA EMERGENTE CARGA DE CATEGORÍAS
+   ************************************************* *@
+<div id="ModalCategorias" class="modal fade ModalCrearProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header" style="padding: 10px !important;">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Carga de Categorías</h5>
+                <button type="button" class="cruzCerrar" data-dismiss="modal" aria-label="Close" onclick="CancelarModalCategoria();">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <input type="hidden" id="ProductoID" value="0" />
+                <form class="form-horizontal form-articulo-factura" role="form" style="margin-top:0px">
+                    <div class="form-group">
+                        <div>
+                            <div class="row" style="margin-bottom: 10px;">
+                                <div class="col-md-8 col-sm-8 col-xs-8">
+                                    <label class="control-label labelModal">Categoría</label>
+                                    @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control inputModalTexto", style = "cursor:pointer;text-align: justify;padding-top: 3px;"})
+                                </div>
+                                <div class="col-md-4 col-sm-4 col-xs-4" style="margin-top: 28px; text-align:center;">
+                                    <button type="button" id="btn-agregar-categoria" onclick="AgregarCategoria();" title="Agregar Categoría" class="btnGuardarModal">Agregar</button>
+                                    <button type="button" id="btn-espere-categoria" title="Agregar Codigo" class="btnEspereModal ocultar" disabled>Guardando...</button>
+                                </div>
+                            </div>
+
+                            <table id="tabla" class="table table-hover table-sm table-condensed">
+                                <thead class="theadColor">
+                                    <tr>
+                                        <th>Categoría</th>
+                                        <th class="text-center tdBotones"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody-categorias"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@* *************************************************
+     FIN VENTANA EMERGENTE CARGA DE CATEGORÍAS
+  ************************************************* *@
+
+@section Scripts{
+    <script src="~/js/CortarImagenProducto.js"></script>
+    <script src="~/js/fotorama.js"></script>
+
+     <script language="javascript">
+        function PulsarTecla(event) {
+            tecla = event.keyCode;
+
+            if (tecla == 107 && event.altKey) {
+                document.getElementById("AgregarProducto").click();
+            }
+        }
+
+        window.onkeydown = PulsarTecla;
+
+        // FUNCION QUE EVITA QUE GUARDE TODO AL PRESIONAR ENTER. (SE USA SOBRE TODO POR EL LECTOR DE CODIGO DE BARRAS).
+        window.onkeydown = EvitarEnter;
+        function EvitarEnter(e) {
+            // averiguamos el código de la tecla pulsada (keyCode para IE y which para Firefox)
+            tecla = (document.all) ? e.keyCode : e.which;
+            // si la tecla no es 13 devuelve verdadero,  si es 13 devuelve false y la pulsación no se ejecuta
+            return (tecla != 13);
+        }
+    </script>
+
+    <script>
+        document.querySelector("#buscar").onkeyup = function () {
+            $TableFilter("#tabla", this.value);
+        }
+
+        $TableFilter = function (id, value) {
+            var rows = document.querySelectorAll(id + ' tbody tr');
+
+            for (var i = 0; i < rows.length; i++) {
+                var showRow = false;
+
+                var row = rows[i];
+                //row.style.display = 'none';
+                row.classList.add('ocultar');
+
+                for (var x = 0; x < row.childElementCount; x++) {
+                    if (row.children[x].textContent.toLowerCase().indexOf(value.toLowerCase().trim()) > -1) {
+                        showRow = true;
+                        break;
+                    }
+                }
+
+                if (showRow) {
+                    //row.style.display = null;
+                    row.classList.remove('ocultar');
+                }
+            }
+        }
+
+        //**************************************************
+        //FUNCIÓN PARA ELIMINAR DEFINITIVAMENTE EL PRODUCTO.
+        //**************************************************
+        function EliminarProducto(productoID) {
+            swal({
+                title: "ATENCIÓN",
+                text: "¿Eliminar Producto?",
+                icon: "warning",
+
+                dangerMode: true,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+
+                buttons: {
+                    cancel: {
+                        text: "Cancelar",
+                        value: null,
+                        visible: true,
+                        className: "botonRojoSweetAlert",
+                        closeModal: true
+                    },
+                    confirm: {
+                        text: "Aceptar",
+                        value: true,
+                        visible: true,
+                        className: "botonVerdeSweetAlert",
+                        closeModal: true
+                    }
+                }
+            }).then((willDelete) => {
+                if (willDelete) {
+                    //SI CONFIRMA LA ELIMINACIÓN
+                    $.ajax({
+                        type: "POST",
+                        url: '../../Productos/EliminarProducto',
+                        data: { id: productoID },
+                        success: function (resultado) {
+
+                            BuscarProductos();
+
+                            swal({
+                                title: "Correcto!",
+                                text: resultado,
+                                icon: "success",
+
+                                dangerMode: true,
+                                closeOnClickOutside: false,
+                                closeOnEsc: false,
+
+                                buttons: {
+                                    confirm: {
+                                        text: "Aceptar",
+                                        value: true,
+                                        visible: true,
+                                        className: "botonVerdeSweetAlert",
+                                        closeModal: true
+                                    }
+                                }
+                            });
+                        },
+                        error: function (result) {
+                            swal({
+                                title: "Error!",
+                                text: "El Producto no se eliminó. Vuelva a intentarlo!",
+                                icon: "error",
+
+                                dangerMode: true,
+                                closeOnClickOutside: false,
+                                closeOnEsc: false,
+
+                                buttons: {
+                                    confirm: {
+                                        text: "Aceptar",
+                                        value: true,
+                                        visible: true,
+                                        className: "botonVerdeSweetAlert",
+                                        closeModal: true
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                else {
+                    //SI PRESIONA CANCELAR
+                    return false;
+                }
+            });
+        }
+    </script>
+
+    <script>
+        window.onload = BuscarProductos();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            $('#buscar').on('keyup', () => {
+                if (document.querySelector('#myTable').querySelectorAll('.ocultar').length === document.querySelector('#myTable').childElementCount) $('.agregar-busqueda').removeClass('ocultar');
+                else $('.agregar-busqueda').addClass('ocultar');
+            });
+            let btnGuardar = document.querySelector('#btn-guardar');
+            btnGuardar.addEventListener('click', GuardarProducto);
+        });
+
+        //***********************************************
+        //FUNCIÓN PARA QUITAR EL MSJ DE ERROR EN LA VISTA.
+        //************************************************
+        function QuitarMensaje() {
+            $('#ErrorDeshabilitar').addClass('ocultar');
+        }
+
+        //**********************************************************
+        //FUNCIÓN PARA ABRIR EL MODAL DE CREAR O EDITAR EL PRODUCTO.
+        //**********************************************************
+        function AbrirModal(param = 0) {
+            //param === 0: Crear
+            //param !== 0: Editar
+            //console.log(param, ' Typeof:', typeof param)
+            let tituloModal = document.querySelector('#exampleModalScrollableTitle');
+
+            if (param === 0) {
+                tituloModal.textContent = 'Crear Producto';
+                $('Descripcion').val($('#buscar').val());
+                $('#ProductoID').val(0);
+                $('#Codigo').val("");
+                $('#MarcaID').val(0);
+                $('#Detalle').val("");
+            }
+            else {
+                tituloModal.textContent = 'Editar Producto';
+                $('#Descripcion').attr('disabled', true);
+                $('#ProductoID').val(param);
+
+                BuscarProducto();
+            }
+            setTimeout(function () { $("#Descripcion").focus(); }, 500);
+            $('#ModalProducto').modal('show');
+        }
+
+        //***************************************************
+        //FUNCIÓN PARA BUSCAR LOS PRODUCTOS
+        //***************************************************
+        function BuscarProductos() {
+            $("#tbody-productos").empty();
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/BuscarTodosProductos',
+                data: {},
+                success: function (productos) {
+                    $("#tbody-productos").empty();
+                    $.each(productos, function (index, producto) {
+
+                        let btnEliminar = '<td class="text-center tdBotones"><a onclick = "EliminarProducto(' + producto.productoID + ')" class="btn-tabla" title = "Eliminar" ><i class="bi bi-trash3-fill btnTablaEliminar"></i></a></td>';
+                        let btnAgregarCategoria = '<td class="text-center tdBotones"><a onclick = "AbrirModalCategoria(' + producto.productoID + ')" class="btn-tabla" title = "Agregar Categoría" ><i class="bi bi-card-list btnAgregarCategoria" ></i></a ></td>';
+                        let btnImgProducto = '<td class="text-center tdBotones"><a onclick="BuscarImagenes(' + producto.productoID + ')" class="btn-tabla" data-bs-toggle="modal" data-bs-target=".MostrarSubirImagenes" title="Mostrar Imagenes"><i class="bi bi-image-fill btnTablaImagen"></i></a></td>';
+
+                        $("#tbody-productos").append('<tr>' +
+                            '<td><a onclick="AbrirModal(' + producto.productoID + ')" class="elementosTabla" style="cursor:pointer" title="Editar Producto">' + producto.descripcion + '</td>' +
+                            '<td class="elementosTablaTexto descarto550 descarto" style="text-transform:uppercase;">' + producto.codigo + '</td>' +
+                            '<td class="elementosTablaTexto" style="text-transform:uppercase;">' + producto.marcaNombre + '</td>' +
+                            '<td class="elementosTablaTexto descarto550 descarto" style="text-transform:uppercase;">' + producto.detalle + '</td>' +
+                            btnAgregarCategoria +
+                            btnImgProducto +
+                            btnEliminar +
+                            '</tr>');
+                    });
+                },
+                error: function (err) {
+                    console.log(err);
+                    swal({
+                        title: "ATENCIÓN",
+                        icon: "error",
+                        text: "Error al cargar Productos.",
+
+                        dangerMode: true,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+
+                        buttons: {
+                            confirm: {
+                                text: "Aceptar",
+                                value: true,
+                                visible: true,
+                                className: "botonVerdeSweetAlert",
+                                closeModal: true
+                            }
+                        },
+                    }).then(res => location.assign('/Productos/Index'));
+                }
+            });
+        }
+    
+        //*************************************************
+        //FUNCIÓN PARA GUARDAR Y GUARDAR-EDITAR EL PRODUCTO.
+        //**************************************************
+        @* function GuardarProducto() {
+            $('#btn-guardar').addClass('ocultar');
+            $('#btn-espere-modal').removeClass('ocultar');
+            $('#btn-cancelar').attr('disabled', true);
+
+            let descripcion = $('#Descripcion').val();
+            let productoID = $('#ProductoID').val();
+            let codigo = $('#Codigo').val();
+            let marcaID = $('#MarcaID').val();
+            let detalle = $('#Detalle').val();
+
+            let guardarProducto = true;
+
+            if (estado < 1 || estado > 5) {
+                guardarProducto = false;
+                $('#error_Estado').removeClass("ocultar");
+
+                $('#btn-guardar').removeClass('ocultar');
+                $('#btn-espere-modal').addClass('ocultar');
+                $('#btn-cancelar').attr('disabled', false);
+            }
+
+            if (guardarProducto == true) {
+                console.log('Estado:', estado)
+                if (productoID === "0") {
+                    $.ajax({
+                        url: '../../Productos/GuardarProducto',
+                        type: 'POST',
+                        data: {
+                            Descripcion: descripcion, Codigo: codigo, CondicionProducto: condicionProducto, MarcaID: marcaID,
+                            Estado: estado, Detalle: detalle
+                        },
+                        success: function (res) {
+                            //console.log(res);
+                            res.forEach(i => {
+                                if (i === 'correcto') {
+                                    LimpiarModal();
+                                    return location.href = '../../Productos/Index';
+                                }
+                                if (i.includes('error_ProductoNombre')) {
+                                    if (i === 'error_ProductoNombre') texto = '*Campo Requerido.';
+                                    document.querySelector(`#error_ProductoNombre`).textContent = texto;
+                                    document.querySelector(`#error_ProductoNombre`).classList.remove('ocultar');
+
+                                    LimpiarMsjError();
+
+                                    $('#btn-guardar').removeClass('ocultar');
+                                    $('#btn-espere-modal').addClass('ocultar');
+                                    $('#btn-cancelar').attr('disabled', false);
+                                }
+
+                            });
+                        }
+                    });
+                }
+                else {
+                    $.ajax({
+                        url: '../../Productos/GuardarEditarProducto',
+                        type: 'POST',
+                        data: {
+                            ProductoID: productoID, Descripcion: descripcion, Codigo: codigo, CondicionProducto: condicionProducto,
+                            MarcaID: marcaID, Estado: estado, Detalle: detalle
+                        },
+                        success: function (res) {
+                            //console.log(res);
+                            if (res.length > 0) {
+                                let texto = '';
+                                res.forEach(i => {
+                                    if (i === 'correcto') {
+                                        LimpiarModal();
+                                        return location.href = '../../Productos/Index';
+                                    }
+                                    if (i.includes('error_ProductoNombre')) {
+                                        if (i === 'error_ProductoNombre') texto = '*Campo Requerido.';
+                                        document.querySelector(`#error_CategoriaNombre`).textContent = texto;
+                                        document.querySelector(`#error_ProductoNombre`).classList.remove('ocultar');
+
+                                        LimpiarMsjError();
+
+                                        $('#btn-guardar').removeClass('ocultar');
+                                        $('#btn-espere-modal').addClass('ocultar');
+                                        $('#btn-cancelar').attr('disabled', false);
+                                    }
+                                });
+                            }
+                            else {
+                                LimpiarModal();
+                                $('#btn-guardar').removeClass('ocultar');
+                                $('#btn-espere-modal').addClass('ocultar');
+                                $('#btn-cancelar').attr('disabled', false);
+                            }
+                        }
+                    });
+                }
+            }
+        }
+
+        //**********************************************************************
+        //FUNCIÓN PARA BUSCAR LA INFO DEL PRODUCTO AL ABRIR EL MODAL PARA EDITAR
+        //**********************************************************************
+        function BuscarProducto() {
+            let productoID = document.querySelector('#ProductoID').value;
+
+            $.ajax({
+                url: '../../Productos/BuscarProducto',
+                type: 'POST',
+                data: { ProductoID: productoID },
+                success: function (res) {
+                    //console.log(res);
+                    $('#Descripcion').val(res.descripcion);
+                    $('#Descripcion').attr('disabled', false);
+                    $('#ProductoID').val(res.productoID);
+                    $('#Codigo').val(res.codigo);
+                    $('#CondicionProductoID').val(res.condicionProducto);
+                    $('#MarcaID').val(res.marcaID);
+                    $('#Estado').val(res.estado);
+                    $('#Detalle').val(res.detalle);
+                }
+            });
+        }
+
+        //***************************************************
+        //FUNCIÓN PARA LIMPIAR EL MODAL AL CERRAR O CANCELAR.
+        //***************************************************
+        $('#ModalProducto').on('hidden.bs.modal', LimpiarModal);
+        function LimpiarModal() {
+            $('#ModalProducto').modal('hide');
+            $('#Descripcion').val('');
+            $('#Descripcion').attr('disabled', false);
+            $('#ProductoID').val(0);
+            $('#Codigo').val("");
+            $('#CondicionProductoID').val(0);
+            $('#MarcaID').val(0);
+            $('#Estado').val("");
+            $('#Detalle').val("");
+
+            $('#btn-guardar').removeClass('ocultar');
+            $('#btn-espere-modal').addClass('ocultar');
+            $('#btn-cancelar').attr('disabled', false);
+            document.querySelectorAll('span[id^="error_"]').forEach(i => {
+                i.textContent = '';
+                i.classList.add('ocultar');
+            });
+        }
+
+        //*******************************************************
+        //FUNCIÓN PARA LIMPIAR LOS MSJS DE ERROR DENTRO DEL MODAL
+        //*******************************************************
+        function LimpiarMsjError() {
+            document.querySelectorAll('span[id^="error_"]').forEach(i => {
+                if (i.textContent !== '') {
+                    i.previousElementSibling.addEventListener('keyup', () => {
+                        i.textContent = '';
+                        i.classList.add('ocultar');
+                    });
+                }
+            })
+        }
+
+//*****************************//************************************************************************//*************************//
+//****************************// INICIO de la sección para las CATEGORÍAS //*****************************//*************************//
+
+        //*****************************************
+        //FUNCIÓN PARA ABRIR EL MODAL DE CATEGORÍAS
+        //*****************************************
+        function AbrirModalCategoria(productoID) {
+            BuscarCategorias(productoID);
+            $.ajax({
+                url: '../../Productos/BuscarProducto',
+                type: 'POST',
+                data: { ProductoID: productoID },
+                success: function (res) {
+                    //console.log(res);
+                    $('#ProductoID').val(res.productoID);
+                }
+            });
+
+            $("#ModalCategorias").modal('show');
+        }
+
+        //**********************************************************************************
+        //FUNCIÓN PARA BUSCAR LAS CATEGORÍAS DEL PRODUCTO Y MOSTRARLA EN LA TABLA DEL MODAL.
+        //**********************************************************************************
+        function BuscarCategorias(productoID) {
+            $("#ProductoID").val(productoID);
+            $("#tbody-categorias").empty();
+
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/BuscarCategorias',
+                data: { ProductoID: productoID },
+                success: function (categoriasMostrar) {
+                    $("#tbody-categorias").empty();
+
+                    $.each(categoriasMostrar, function (index, item) {
+
+                        let btnQuitarCategoria = '<td class="text-center tdBotones"><a onclick = "EliminarCategoria(' + item.productoCategoriaID + ')" class="btn-tabla" title = "Quitar" ><i class="bi bi-trash3-fill btnTablaEliminar"></i></a></td>';
+
+                        $("#tbody-categorias").append("<tr>" +
+
+                            "<td class='elementosTablaTexto' tyle='width: 80 %;'>" + item.categoriaNombre + "</td>" +
+
+                            btnQuitarCategoria +
+
+                            "</tr>");
+                    });
+
+                },
+                error: function (result) {
+                    console.log("No se pudieron cargar las categorías: " + result);
+                }
+            });
+        }
+
+        //**********************************************
+        //FUNCIÓN PARA ASOCIAR LA CATEGORÍA AL PRODUCTO.
+        //**********************************************
+        function AgregarCategoria(productoID) {
+            $("#btn-agregar-categoria").addClass("ocultar");
+            $("#btn-espere-categoria").removeClass("ocultar");
+            var categoriaID = $('#CategoriaID').val();
+            var productoID = $('#ProductoID').val();
+
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/AgregarCategorias',
+                data: { CategoriaID: categoriaID, ProductoID: productoID },
+                success: function (categoriasMostrar) {
+                    $("#btn-agregar-categoria").removeClass("ocultar");
+                    $("#btn-espere-categoria").addClass("ocultar");
+                    BuscarCategorias(productoID);
+                },
+                error: function (result) {
+
+                }
+            });
+        }
+
+        //*******************************************************
+        //FUNCIÓN PARA ELIMINAR LA CATEGORÍA ASOCIADA AL PRODUCTO.
+        //********************************************************
+        function EliminarCategoria(ProductoCategoriaID) {
+            var productoID = $("#ProductoID").val();
+
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/QuitarCategoria',
+                data: { ProductoCategoriaID: ProductoCategoriaID },
+                success: function (resultado) {
+
+                    BuscarCategorias(productoID);
+                },
+                error: function (result) {
+
+                }
+            });
+        }
+
+        //*****************************************************************
+        //FUNCIÓN PARA LIMPIAR EL MODAL DE CATEGORÍAS AL CERRAR O CANCELAR.
+        //*****************************************************************
+        $('#ModalCategorias').on('hidden.bs.modal', CancelarModalCategoria);
+        function CancelarModalCategoria() {
+            $('#ModalCategorias').modal('hide');
+            $('#CategoriaID').val(0);
+
+            $('#btn-agregar-categoria').removeClass('ocultar');
+            $('#btn-espere-categoria').addClass('ocultar');
+        }
+
+//*****************************//************************************************************************//*************************//
+//****************************// INICIO de la sección para las IMÁGENES //*******************************//************************//
+
+        //**************************************************************
+        //FUNCIÓN PARA BUSCAR LAS IMAGENES CORRESPONDIENTES AL PRODUCTO.
+        //**************************************************************
+        function BuscarImagenes(productoID) {
+            $("#ProductoID").val(productoID);
+            $("#ImagenesProducto").empty();
+
+            $.ajax({
+                url: '../../Productos/BuscarImagenes',
+                data: { ProductoID: productoID },
+                dataType: 'json',
+                success: function (listaImagenProducto) {
+                    var imagenes = "";
+                    var botonesEliminar = "";
+                    $.each(listaImagenProducto, function (index, imagen) {
+                        imagenes += "<img src='data:image/jpeg;base64," + imagen.base64 + "'>";
+                    });
+
+                    //CREAMOS EL DIV PRINCIPAL QUE CONTIENE TODAS LAS IMAGENES DEL PRODUCTO.
+                    if (imagenes == null || imagenes == "") {
+                        var mensaje = $("<p style='font-size:16px; color:red; text-align:center; font-weight:bold;'> No hay imágenes cargadas para este producto.<p>");
+                        $("#ImagenesProducto").empty().append(mensaje);
+                    } else {
+                        $("#ImagenesProducto").append("<div style='margin-bottom:20px;' class='fotorama' data-auto='false' data-width='700' data-ratio='700/467' data-max-width='100%' data-nav='thumbs' data-autoplay='true'>" +
+
+                            imagenes +
+
+                            "</div>");
+                    }
+
+                    //ESTO ES PARA INICIAR EL MÉTODO DE PASAR IMAGENES.
+                    $('.fotorama').fotorama();
+
+                    // LLAMAMOS A LA FUNCION DE BUSCAR LAS IMAGENES PARA PODER ELIMINARLAS.
+                    BuscarImagenesEliminar(productoID);
+
+                },
+                error: function (resultado) {
+                    swal({
+                        title: "ATENCIÓN",
+                        icon: "error",
+                        text: "Ocurrio un error al cargar las imagenes.",
+
+                        dangerMode: true,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+
+                        buttons: {
+                            confirm: {
+                                text: "Aceptar",
+                                value: true,
+                                visible: true,
+                                className: "botonVerdeSweetAlert",
+                                closeModal: true
+                            }
+                        },
+                    });
+                }
+            });
+        }
+
+        //****************************************************************************
+        //FUNCIÓN PARA GUARDAR EN LA TABLA LAS IMAGENES SELECCIONADAS PARA EL PRODUCTO 
+        //****************************************************************************
+        function GuardarImagen() {
+            var productoID = $("#ProductoID").val();
+            var image = $('#image').val();
+
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/GuardarImagen',
+                data: { ImagenAGuardar: image, ProductoID: productoID },
+                success: function (resultado) {
+                    if (resultado == 1) {
+                        VaciarCampoImagen();
+
+                        BuscarImagenes(productoID);
+
+                    }
+                },
+                error: function (result) {
+                    swal({
+                        title: "ATENCIÓN",
+                        icon: "error",
+                        text: "Ocurrio un error al Guardar o llego al limite de 3 Imagenes por Producto, pruebe nuevamente más tarde o Elimine alguna Imagen!",
+
+                        dangerMode: true,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+
+                        buttons: {
+                            confirm: {
+                                text: "Aceptar",
+                                value: true,
+                                visible: true,
+                                className: "botonVerdeSweetAlert",
+                                closeModal: true
+                            }
+                        },
+                    });
+                    // alert("Ocurrio un error al Guardar o llego al limite de 3 Imagenes por Producto, pruebe nuevamente más tarde o Elimine alguna Imagen!");
+                }
+            });
+        }
+
+        //******************************************************************************************
+        //FUNCIÓN PARA BUSCAR EN LA TABLA LAS IMAGENES CORRESPONDIENTES AL PRODUCTO PARA MOSTRARLAS.
+        //******************************************************************************************
+        function BuscarImagenesEliminar(productoID) {
+            $("#ImagenesProductoEliminar").empty();
+
+            $.ajax({
+                url: '../../Productos/BuscarImagenes',
+                data: { ProductoID: productoID },
+                dataType: 'json',
+                success: function (listaImagenProducto) {
+                    var imagenes = "";
+                    var botonesEliminar = "";
+                    $.each(listaImagenProducto, function (index, imagen) {
+                        //CREAMOS EL DIV PRINCIPAL QUE CONTIENE TODAS LAS IMAGENES DEL PRODUCTO
+                        $("#ImagenesProductoEliminar").append("<tr class='altoBotonesTabla'>" +
+
+                            "<td><img class='imagenProductoEliminar' src='data:image/jpeg;base64," + imagen.base64 + "' style='width: 100 %;'> </td>" +
+
+                            "<td style='width:50%'>" +
+                            "<p class='text-center'><a onclick='EliminarImagen(" + imagen.imgProductosID + ");' class='btn-ovaloEliminar' title='Eliminar Imagen'>Eliminar</a></p>" +
+                            "</td>" +
+
+                            "</tr>");
+                    });
+                },
+                error: function (resultado) {
+                    swal({
+                        title: "ATENCIÓN",
+                        icon: "error",
+                        text: "Ocurrio un error al cargar las imagenes.",
+
+                        dangerMode: true,
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+
+                        buttons: {
+                            confirm: {
+                                text: "Aceptar",
+                                value: true,
+                                visible: true,
+                                className: "",
+                                closeModal: true
+                            }
+                        },
+                    });
+                }
+            });
+        }
+
+        //****************************************************
+        //FUNCIÓN PARA ELIMINAR LA IMAGEN ASOCIADA AL PRODUCTO
+        //****************************************************
+        function EliminarImagen(ImgProductosID) {
+            var productoID = $("#ProductoID").val();
+
+            $.ajax({
+                url: "../../Productos/EliminarImagenProducto",
+                type: "POST",
+                data: { ImgProductosID: ImgProductosID },
+                success: function (resultado) {
+
+                    VaciarCampoImagen();
+
+                    BuscarImagenes(productoID);
+
+                },
+                error: function (resultado) {
+                }
+            });
+        }
+
+        //*********************************************************************************
+        //FUNCIÓN PARA VACIAR EL CAMPO DE LA IMAGEN Y PODER CARGAR OTRA SIN CERRAR EL MODAL
+        //*********************************************************************************
+        function VaciarCampoImagen() {
+            $("#volver-cortar").click();
+        }
+
+        //********************************************
+        //FUNCIÓN PARA CERRAR EL MODAL DE LAS IMAGENES
+        //********************************************
+        function CerrarCargaImagen() {
+            $('#ModalMostrarSubirImagenes').modal('hide');
+        }
+*@
+    </script>
+
+    }  
