@@ -430,7 +430,7 @@
                     $("#tbody-productos").empty();
                     $.each(productos, function (index, producto) {
 
-                        let btnEliminar = '<td class="text-center tdBotones"><a onclick = "EliminarProducto(' + producto.productoID + ')" class="btn-tabla" title = "Eliminar" ><i class="bi bi-trash3-fill btnTablaEliminar"></i></a></td>';
+                        let btnEliminar = '<td class="text-center tdBotones"><a onclick = "EliminarProducto(' + producto.productoID + ')" class="btn-tabla" title = "Eliminar" ><i class="bi bi-trash btnTablaEliminar"></i></a></td>';
                         let btnAgregarCategoria = '<td class="text-center tdBotones"><a onclick = "AbrirModalCategoria(' + producto.productoID + ')" class="btn-tabla" title = "Agregar Categoría" ><i class="bi bi-card-list btnAgregarCategoria" ></i></a ></td>';
                         let btnImgProducto = '<td class="text-center tdBotones"><a onclick="BuscarImagenes(' + producto.productoID + ')" class="btn-tabla" data-bs-toggle="modal" data-bs-target=".MostrarSubirImagenes" title="Mostrar Imagenes"><i class="bi bi-image-fill btnTablaImagen"></i></a></td>';
 
@@ -647,7 +647,7 @@
 
                     $.each(categoriasMostrar, function (index, item) {
 
-                        let btnQuitarCategoria = '<td class="text-center tdBotones"><a onclick = "EliminarCategoria(' + item.CategoriaID + ')" class="btn-tabla" title = "Quitar" ><i class="bi bi-trash3-fill btnTablaEliminar"></i></a></td>';
+                        let btnQuitarCategoria = '<td class="text-center tdBotones"><a onclick = "EliminarCategoria(' + item.CategoriaID + ')" class="btn-tabla" title = "Quitar" ><i class="bi bi-trash btnTablaEliminar"></i></a></td>';
 
                         $("#tbody-categorias").append("<tr>" +
 
