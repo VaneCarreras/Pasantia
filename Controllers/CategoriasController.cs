@@ -59,7 +59,7 @@ namespace Pasantia.Controllers
             if (id > 0)
             {
                 //VALIDAR SI NO TIENE PRODUCTOS ACTIVOS RELACIONADOS---- NO CREE PRODUCTOS AUN
-                var productosActivos = (from o in _context.Categoria where o.CategoriaID == categoria.CategoriaID select o).Count();
+                var productosActivos = (from o in _context.Producto where o.CategoriaID == categoria.CategoriaID select o).Count();
                 if (productosActivos > 0 )
                 {
                      resultado = 0;
