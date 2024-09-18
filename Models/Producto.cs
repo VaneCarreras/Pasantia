@@ -26,8 +26,11 @@ namespace Pasantia.Models
         public int ProductoID { get; set; }
         public string? Descripcion { get; set; }
         public int MarcaID { get; set; }
+                public int CategoriaID { get; set; }
+
         public string? MarcaNombre { get; set; }
-        public int CantidadImagenes { get; set; }
+                public string? CategoriaNombre { get; set; }
+
         public string? Base64 { get; set; }
         public List<string> NombreCategorias { get; set; }
         public List<string> ImagenesProductos { get; set; }

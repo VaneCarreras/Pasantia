@@ -39,7 +39,8 @@
                 <tr>
                     <th>Descripción</th>
                     <th>Marca</th>
-                    <th class="text-center tdBotones"></th>
+                    <th>Categoría</th>
+                    
                     <th class="text-center tdBotones"></th>
                     <th class="text-center tdBotones"></th>
                 </tr>
@@ -79,6 +80,11 @@
                             <div class="col-md-4 col-sm-6 col-xs-6 mb-3">
                                 <label class="control-label labelModal">Marca</label>
                                 @Html.DropDownList("MarcaID", null, htmlAttributes: new { @class = "form-control inputModalTexto", style = "cursor:pointer;text-align: justify;padding-top: 3px;"})
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-6 mb-3">
+                                <label class="control-label labelModal">Categoría</label>
+                                @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control inputModalTexto", style = "cursor:pointer;text-align: justify;padding-top: 3px;"})
                             </div>
 
                         </div>
@@ -180,7 +186,7 @@
 @* *************************************************
      VENTANA EMERGENTE CARGA DE CATEGORÍAS
    ************************************************* *@
-<div id="ModalCategorias" class="modal fade ModalCrearProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+@* <div id="ModalCategorias" class="modal fade ModalCrearProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header" style="padding: 10px !important;">
@@ -222,7 +228,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 @* *************************************************
      FIN VENTANA EMERGENTE CARGA DE CATEGORÍAS
   ************************************************* *@
@@ -431,13 +437,15 @@
                     $.each(productos, function (index, producto) {
 
                         let btnEliminar = '<td class="text-center tdBotones"><a onclick = "EliminarProducto(' + producto.productoID + ')" class="btn-tabla" title = "Eliminar" ><i class="bi bi-trash btnTablaEliminar"></i></a></td>';
-                        let btnAgregarCategoria = '<td class="text-center tdBotones"><a onclick = "AbrirModalCategoria(' + producto.productoID + ')" class="btn-tabla" title = "Agregar Categoría" ><i class="bi bi-card-list btnAgregarCategoria" ></i></a ></td>';
+                        @* let btnAgregarCategoria = '<td class="text-center tdBotones"><a onclick = "AbrirModalCategoria(' + producto.productoID + ')" class="btn-tabla" title = "Agregar Categoría" ><i class="bi bi-card-list btnAgregarCategoria" ></i></a ></td>'; *@
+                                                 @* let btnAgregarCategoria = '<td class="text-center "></td>'; *@
+
                         let btnImgProducto = '<td class="text-center tdBotones"><a onclick="BuscarImagenes(' + producto.productoID + ')" class="btn-tabla" data-bs-toggle="modal" data-bs-target=".MostrarSubirImagenes" title="Mostrar Imagenes"><i class="bi bi-image-fill btnTablaImagen"></i></a></td>';
 
                         $("#tbody-productos").append('<tr>' +
                             '<td><a onclick="AbrirModal(' + producto.productoID + ')" class="elementosTabla" style="cursor:pointer" title="Editar Producto">' + producto.descripcion + '</td>' +
-                            '<td class="elementosTablaTexto" style="text-transform:uppercase;">' + producto.marcaNombre + '</td>' +
-                            btnAgregarCategoria +
+                            '<td class="elementosTablaTexto" style="text-transform:uppercase;">' + producto.marcaNombre + '</td>' + '<td class="elementosTablaTexto" style="text-transform:uppercase;">' + producto.categoriaNombre + '</td>' +
+                            @* btnAgregarCategoria + *@
                             btnImgProducto +
                             btnEliminar +
                             '</tr>');
@@ -469,7 +477,7 @@
         }
     
         //*************************************************
-        //FUNCIÓN PARA GUARDAR Y GUARDAR-EDITAR EL PRODUCTO.hastahastahastajastahastahastahastahsasta
+        //FUNCIÓN PARA GUARDAR Y GUARDAR-EDITAR EL PRODUCTO.hasta
         //**************************************************
         function GuardarProducto() {
             $('#btn-guardar').addClass('ocultar');
@@ -479,17 +487,20 @@
             let descripcion = $('#Descripcion').val();
             let productoID = $('#ProductoID').val();
             let marcaID = $('#MarcaID').val();
+                        let categoriaID = $('#CategoriaID').val();
 
+           
             let guardarProducto = true;
+            //AGREGAR VALIDACIONES DE EXISTENCIA DE DATOS
 
             if (guardarProducto == true) {
                 
-                if (productoID === "0") {
+                if (productoID == 0) {
                     $.ajax({
                         url: '../../Productos/GuardarProducto',
                         type: 'POST',
                         data: {
-                            Descripcion: descripcion, MarcaID: marcaID
+                            Descripcion: descripcion, MarcaID: marcaID, CategoriaID: categoriaID
                         },
                         success: function (res) {
                             //console.log(res);
@@ -516,11 +527,14 @@
                 }
 
                 else {
+
+                     //alert(productoID + " -- " + descripcion + " -- " + marcaID + " -- " + categoriaID);
+
                     $.ajax({
                         url: '../../Productos/GuardarEditarProducto',
                         type: 'POST',
                         data: {
-                            ProductoID: productoID, Descripcion: descripcion, MarcaID: marcaID
+                            ProductoID: productoID, Descripcion: descripcion, MarcaID: marcaID, CategoriaID: categoriaID
                         },
                         success: function (res) {
                             //console.log(res);
@@ -533,7 +547,10 @@
                                     }
                                     if (i.includes('error_ProductoNombre')) {
                                         if (i === 'error_ProductoNombre') texto = '*Campo Requerido.';
+                                        document.querySelector(`#error_MarcaNombre`).textContent = texto;
                                         document.querySelector(`#error_CategoriaNombre`).textContent = texto;
+
+
                                         document.querySelector(`#error_ProductoNombre`).classList.remove('ocultar');
 
                                         LimpiarMsjError();
@@ -572,6 +589,8 @@
                     $('#Descripcion').attr('disabled', false);
                     $('#ProductoID').val(res.productoID);
                     $('#MarcaID').val(res.marcaID);
+                                        $('#CategoriaID').val(res.categoriaID);
+
                 }
             });
         }
@@ -586,6 +605,8 @@
             $('#Descripcion').attr('disabled', false);
             $('#ProductoID').val(0);
             $('#MarcaID').val(0);
+                        $('#CategoriaID').val(0);
+
 
             $('#btn-guardar').removeClass('ocultar');
             $('#btn-espere-modal').addClass('ocultar');
@@ -616,7 +637,7 @@
         //*****************************************
         //FUNCIÓN PARA ABRIR EL MODAL DE CATEGORÍAS
         //*****************************************
-        function AbrirModalCategoria(productoID) {
+        @* function AbrirModalCategoria(productoID) {
             BuscarCategorias(productoID);
             $.ajax({
                 url: '../../Productos/BuscarProducto',
@@ -629,12 +650,12 @@
             });
 
             $("#ModalCategorias").modal('show');
-        }
+        } *@
 
         //**********************************************************************************
         //FUNCIÓN PARA BUSCAR LAS CATEGORÍAS DEL PRODUCTO Y MOSTRARLA EN LA TABLA DEL MODAL.
         //**********************************************************************************
-        function BuscarCategorias(productoID) {
+        @* function BuscarCategorias(productoID) {
             $("#ProductoID").val(productoID);
             $("#tbody-categorias").empty();
 
@@ -663,12 +684,12 @@
                     console.log("No se pudieron cargar las categorías: " + result);
                 }
             });
-        }
+        } *@
 
         //**********************************************
         //FUNCIÓN PARA ASOCIAR LA CATEGORÍA AL PRODUCTO.
         //**********************************************
-        function AgregarCategoria(productoID) {
+        @* function AgregarCategoria(productoID) {
             $("#btn-agregar-categoria").addClass("ocultar");
             $("#btn-espere-categoria").removeClass("ocultar");
             var categoriaID = $('#CategoriaID').val();
@@ -687,12 +708,12 @@
 
                 }
             });
-        }
+        } *@
 
         //*******************************************************
         //FUNCIÓN PARA ELIMINAR LA CATEGORÍA ASOCIADA AL PRODUCTO.
         //********************************************************
-        function EliminarCategoria(ProductoCategoriaID) {
+        @* function EliminarCategoria(ProductoCategoriaID) {
             var productoID = $("#ProductoID").val();
 
             $.ajax({
@@ -707,19 +728,19 @@
 
                 }
             });
-        }
+        } *@
 
         //*****************************************************************
         //FUNCIÓN PARA LIMPIAR EL MODAL DE CATEGORÍAS AL CERRAR O CANCELAR.
         //*****************************************************************
-        $('#ModalCategorias').on('hidden.bs.modal', CancelarModalCategoria);
+        @* $('#ModalCategorias').on('hidden.bs.modal', CancelarModalCategoria);
         function CancelarModalCategoria() {
             $('#ModalCategorias').modal('hide');
             $('#CategoriaID').val(0);
 
             $('#btn-agregar-categoria').removeClass('ocultar');
             $('#btn-espere-categoria').addClass('ocultar');
-        }
+        } *@
 
 //*****************************//************************************************************************//*************************//
 //****************************// INICIO de la sección para las IMÁGENES //*******************************//************************//
@@ -882,13 +903,13 @@
         //****************************************************
         //FUNCIÓN PARA ELIMINAR LA IMAGEN ASOCIADA AL PRODUCTO
         //****************************************************
-        function EliminarImagen(ImagenProductosID) {
+        function EliminarImagen(ImgProductosID) {
             var productoID = $("#ProductoID").val();
 
             $.ajax({
                 url: "../../Productos/EliminarImagenProducto",
                 type: "POST",
-                data: { ImagenProductosID: ImagenProductosID },
+                data: { ImgProductosID: ImgProductosID },
                 success: function (resultado) {
 
                     VaciarCampoImagen();

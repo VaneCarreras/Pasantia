@@ -55,6 +55,7 @@ namespace Pasantia.Controllers
             foreach (var p in productosCargados.OrderBy(c => c.Descripcion))
             {
                 var marcaNombre = (from c in _context.Marca where c.MarcaID == p.MarcaID select c.MarcaNombre).Single();
+                var categoriaNombre = (from c in _context.Categoria where c.CategoriaID == p.CategoriaID select c.CategoriaNombre).Single();
 
                 //VARIABLE DE LA COND DE USADO O REACOND
 
@@ -62,7 +63,8 @@ namespace Pasantia.Controllers
                 {
                     ProductoID = p.ProductoID,
                     Descripcion = p.Descripcion,
-                    MarcaNombre = marcaNombre
+                    MarcaNombre = marcaNombre,
+                    CategoriaNombre = categoriaNombre
                 };
                 listaDeProductos.Add(registro);
             }
@@ -93,18 +95,21 @@ namespace Pasantia.Controllers
                 Producto producto = _context.Producto.Find(ProductoID);
 
                 var marcaNombre = (from c in _context.Marca where c.MarcaID == producto.MarcaID select c.MarcaNombre).Single();
+                var categoriaNombre = (from c in _context.Categoria where c.CategoriaID == producto.CategoriaID select c.CategoriaNombre).Single();
 
                 resultado.ProductoID = ProductoID;
                 resultado.Descripcion = producto.Descripcion;
                 resultado.MarcaID = producto.MarcaID;
                 resultado.MarcaNombre = marcaNombre;
+                resultado.CategoriaID = producto.CategoriaID;
+                resultado.CategoriaNombre = categoriaNombre;
             }
 
             return Json(resultado);
         }
 
-        public JsonResult GuardarProducto(string Descripcion, 
-            int MarcaID)
+        public JsonResult GuardarProducto(string Descripcion,
+            int MarcaID, int CategoriaID)
         {
             List<string> resultado = new List<string>();
 
@@ -114,14 +119,15 @@ namespace Pasantia.Controllers
 
                 //COMPROB DE ESTADO
 
-               //COMPROB DETALLE
+                //COMPROB DETALLE
 
                 //COMPROB CODIGO
 
                 Producto producto = new Producto
                 {
                     Descripcion = Descripcion,
-                    MarcaID = MarcaID
+                    MarcaID = MarcaID,
+                    CategoriaID = CategoriaID
                 };
                 _context.Producto.Add(producto);
                 _context.SaveChanges();
@@ -133,8 +139,51 @@ namespace Pasantia.Controllers
             return Json(resultado);
         }
 
-        public JsonResult GuardarEditarProducto(int ProductoID, string Descripcion, 
-            int MarcaID)
+        // public JsonResult GuardarProducto(string Descripcion, string Codigo,
+        //             int MarcaID, int Estado, string Detalle)
+        //         {
+        //             List<string> resultado = new List<string>();
+
+        //             if (!String.IsNullOrEmpty(Descripcion))
+        //             {
+        //                 Descripcion = Descripcion.ToUpper();
+
+        //                 if (Estado < 1 || Estado > 5)
+        //                 {
+        //                     resultado.Add("error_EstadoFueraDeRango");
+        //                     return Json(resultado);
+        //                 }
+
+        //                 string detalle = "";
+        //                 if (!String.IsNullOrEmpty(Detalle))
+        //                 {
+        //                     detalle = Detalle.ToUpper();
+        //                 }
+
+        //                 string codigoProducto = "";
+        //                 if (!String.IsNullOrEmpty(Codigo))
+        //                 {
+        //                     codigoProducto = Codigo.ToUpper();
+        //                 }
+
+        //                 Producto producto = new Producto
+        //                 {
+        //                     Descripcion = Descripcion,
+        //                     MarcaID = MarcaID
+        //                 };
+        //                 _context.Producto.Add(producto);
+        //                 _context.SaveChanges();
+        //                 resultado.Add("correcto");
+
+        //             }
+        //             if (String.IsNullOrEmpty(Descripcion)) resultado.Add("error_ProductoNombre");
+
+        //             return Json(resultado);
+        //         }
+
+
+        public JsonResult GuardarEditarProducto(int ProductoID, string Descripcion,
+            int MarcaID, int CategoriaID)
         {
             //PRIMERO BUSCAMOS EL USUARIO ACTUAL
             var usuarioActual = _userManager.GetUserId(HttpContext.User);
@@ -148,21 +197,16 @@ namespace Pasantia.Controllers
                 {
                     if (!String.IsNullOrEmpty(Descripcion))
                     {
-                    
                         Descripcion = Descripcion.ToUpper();
-                        
                     }
-                        //COMPROB ESTADO
-                        else
-                        {
-                            producto.Descripcion = Descripcion;
-                            producto.MarcaID = MarcaID;
 
-                            _context.SaveChanges();
-                            resultado.Add("correcto");
-                        }
+                    producto.Descripcion = Descripcion;
+                    producto.MarcaID = MarcaID;
+                    producto.CategoriaID = CategoriaID;
 
-                    
+                    _context.SaveChanges();
+                    resultado.Add("correcto");
+
                     if (String.IsNullOrEmpty(Descripcion)) resultado.Add("error_ProductoNombre");
                 }
                 else
@@ -176,142 +220,143 @@ namespace Pasantia.Controllers
 
         //BUSCAR CATEGORIAS METODO CE RECUPERACION
 
-        public JsonResult AgregarCategorias(int CategoriaID, int ProductoID)
+        // public JsonResult AgregarCategorias(int CategoriaID, int ProductoID)
+        // {
+        //     bool resultado = false;
+
+        //     //FIJAR INFORMACION DE CULTURA PARA FECHA Y DECIMALES
+        //     Thread.CurrentThread.CurrentCulture = new CultureInfo("es-AR");
+
+        //     if (ProductoID != 0)
+        //     {
+        //         var producto = (from o in _context.Producto where o.ProductoID == ProductoID select o)
+        //             .Include(c => c.Categoria).Single();
+        //         if (producto != null)
+        //         {
+        //             if (CategoriaID > 0)
+        //             {
+        //                 var existeCategoria = _context.Categoria
+        //                     .Where(x => x.CategoriaID == CategoriaID).ToList();
+        //                 if (existeCategoria.Count > 0)
+        //                 {
+        //                     resultado = false;
+        //                 }
+        //                 else
+        //                 {
+        //                     var categoriaProductos = new ProductoCategoria
+        //                     {
+        //                         CategoriaID = CategoriaID,
+        //                         ProductoID = ProductoID
+        //                     };
+        //                     _context.SaveChanges();
+
+        //                     resultado = true;
+        //                 }
+
+        //             }
+        //         }
+
+        //     }
+
+        //     return Json(resultado);
+        // }
+
+
+
+
+        // public JsonResult QuitarCategoria(ProductoCategoria)
+        // {
+        //     bool resultado = false;
+
+        //     if (CategoriaID > 0)
+        //     {
+        //         var productoCategoria = (from o in _context.Categoria.ProductoCategoria where o.CategoriaID == CategoriaID select o).Include(p => p.Producto).Single();
+
+        //         if (productoCategoria != null)
+        //         {
+        //             _context.Categoria.ProductoCategoria.Remove(productoCategoria);
+        //             _context.SaveChanges();
+        //             resultado = true;
+        //         }
+        //     }
+
+        //     return Json(resultado);
+        // }
+
+
+        public JsonResult BuscarImagenes(int ProductoID)
         {
-            bool resultado = false;
+            List<VistaImagenProducto> listaImagenProducto = new List<VistaImagenProducto>();
 
-            //FIJAR INFORMACION DE CULTURA PARA FECHA Y DECIMALES
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("es-AR");
+            var imagenesProd = (from o in _context.ImagenProducto where o.ProductoID == ProductoID select o).ToList();
 
-            if (ProductoID != 0)
+            foreach (var item in imagenesProd)
             {
-                var producto = (from o in _context.Producto where o.ProductoID == ProductoID select o)
-                    .Include(c => c.Categoria).Single();
-                if (producto != null)
+                string returnValue = System.Convert.ToBase64String(item.Imagen);
+
+                var imagenProducto = new VistaImagenProducto
                 {
-                    if (CategoriaID > 0)
+                    ImgProductosID = item.ImagenProductoID,
+                    Base64 = returnValue
+                };
+                listaImagenProducto.Add(imagenProducto);
+            }
+
+            return Json(listaImagenProducto);
+        }
+
+        public JsonResult GuardarImagen(string ImagenAGuardar, int ProductoID)
+        {
+            var resultado = false;
+
+            try
+            {
+                var cantidadImagenes = (from o in _context.ImagenProducto where o.ProductoID == ProductoID select o).Count();
+                if (cantidadImagenes < 3)
+                {
+                    if (ImagenAGuardar != null && ImagenAGuardar.Length > 0)
                     {
-                        var existeCategoria = _context.Categoria
-                            .Where(x => x.CategoriaID == CategoriaID).ToList();
-                        if (existeCategoria.Count > 0)
-                        {
-                            resultado = false;
-                        }
-                        else
-                        {
-                            var categoriaProductos = new ProductoCategoria
-                            {
-                                CategoriaID = CategoriaID,
-                                ProductoID = ProductoID
-                            };
-                            _context.SaveChanges();
+                        byte[] bytes = Convert.FromBase64String(ImagenAGuardar.Split(',')[1]);
 
-                            resultado = true;
-                        }
+                        var imagenProd = new ImagenProducto
+                        {
+                            Imagen = bytes,
+                            ProductoID = Convert.ToInt32(ProductoID)
+                        };
+                        _context.ImagenProducto.Add(imagenProd);
+                        _context.SaveChanges();
 
+                        resultado = true;
                     }
                 }
-
+                else
+                {
+                    resultado = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
             }
 
             return Json(resultado);
         }
+
+        public JsonResult EliminarImagenProducto(int ImgProductosID)
+        {
+            bool resultado = true;
+
+            ImagenProducto imagenProducto = _context.ImagenProducto.Find(ImgProductosID);
+
+            _context.ImagenProducto.Remove(imagenProducto);
+            _context.SaveChanges();
+
+            return Json(resultado);
+        }
+
+
     }
 }
-
-
-//         public JsonResult QuitarCategoria(ProductoCategoria)
-//         {
-//             bool resultado = false;
-
-//             if (CategoriaID > 0)
-//             {
-//                 var productoCategoria = (from o in _context.Categoria.ProductoCategoria where o.CategoriaID == CategoriaID select o).Include(p => p.Producto).Single();
-
-//                 if (productoCategoria != null)
-//                 {
-//                     _context.Categoria.ProductoCategoria.Remove(productoCategoria);
-//                     _context.SaveChanges();
-//                     resultado = true;
-//                 }
-//             }
-
-//             return Json(resultado);
-//         }
-
-
-//         public JsonResult BuscarImagenes(int ProductoID)
-//         {
-//             List<VistaImagenProducto> listaImagenProducto = new List<VistaImagenProducto>();
-
-//             var imagenesProd = (from o in _context.ImagenProducto where o.ProductoID == ProductoID select o).ToList();
-
-//             foreach (var item in imagenesProd)
-//             {
-//                 string returnValue = System.Convert.ToBase64String(item.Imagen);
-
-//                 var imagenProducto = new VistaImagenProducto
-//                 {
-//                     ImgProductosID = item.ImagenProductoID,
-//                     Base64 = returnValue
-//                 };
-//                 listaImagenProducto.Add(imagenProducto);
-//             }
-
-//             return Json(listaImagenProducto);
-//         }
-
-//         public JsonResult GuardarImagen(string ImagenAGuardar, int ProductoID)
-//         {
-//             var resultado = false;
-
-//             try
-//             {
-//                 var cantidadImagenes = (from o in _context.ImagenProducto where o.ProductoID == ProductoID select o).Count();
-//                 if (cantidadImagenes < 3)
-//                 {
-//                     if (ImagenAGuardar != null && ImagenAGuardar.Length > 0)
-//                     {
-//                         byte[] bytes = Convert.FromBase64String(ImagenAGuardar.Split(',')[1]);
-
-//                         var imagenProd = new ImgProducto
-//                         {
-//                             Imagen = bytes,
-//                             ProductoID = Convert.ToInt32(ProductoID)
-//                         };
-//                         _context.ImagenProducto.Add(imagenProd);
-//                         _context.SaveChanges();
-
-//                         resultado = true;
-//                     }
-//                 }
-//                 else
-//                 {
-//                     resultado = false;
-//                 }
-//             }
-//             catch (Exception ex)
-//             {
-//                 resultado = false;
-//             }
-
-//             return Json(resultado);
-//         }
-
-//         public JsonResult EliminarImagenProducto(int ImgProductosID)
-//         {
-//             bool resultado = true;
-
-//             ImgProducto imagenProducto = _context.ImagenProducto.Find(ImgProductosID);
-
-//             _context.ImagenProducto.Remove(imagenProducto);
-//             _context.SaveChanges();
-
-//             return Json(resultado);
-//         }
-    
-
-
 
 
 

@@ -59,12 +59,12 @@ namespace Pasantia.Controllers
             if (id > 0)
             {
                 //VALIDAR SI NO TIENE PRODUCTOS ACTIVOS RELACIONADOS---- NO CREE PRODUCTOS AUN
-                // var productosActivos = (from o in _context.Categoria where o.CategoriaID == categoria.CategoriaID select o).Count();
-                // if (productosActivos > 0 )
-                // {
-                //      resultado = 0;
-                // }
-                // else
+                var productosActivos = (from o in _context.Categoria where o.CategoriaID == categoria.CategoriaID select o).Count();
+                if (productosActivos > 0 )
+                {
+                     resultado = 0;
+                }
+                else
                 {
                 categoria.Eliminado = true;
                 _context.SaveChanges();
@@ -175,7 +175,9 @@ namespace Pasantia.Controllers
 
         // public JsonResult BuscarCategoriasProductos()
         // {
-        //     var categorias = _context.Categoria.Include(c => c.ProductoCategorias).ToList();
+        //     // var categorias = _context.Categoria.Include(c => c.ProductoCategorias).ToList();
+        //     var categorias = _context.Categoria.ToList();
+
         //     List<CategoriaMostrar> categoriasMostrar = new List<CategoriaMostrar>();
         //     foreach (var categoria in categorias.OrderBy(c => c.CategoriaNombre))
         //     {
@@ -183,7 +185,7 @@ namespace Pasantia.Controllers
         //         {
         //             CategoriaID = categoria.CategoriaID,
         //             CategoriaNombre = categoria.CategoriaNombre,
-        //             CantidadProducto = categoria.ProductoCategorias.Count
+        //             // CantidadProducto = categoria.ProductoCategorias.Count
         //         };
         //         categoriasMostrar.Add(categoriaMostrar);
         //     }
