@@ -98,8 +98,8 @@
     -moz-box-orient: vertical;
     display: inline-block;
     vertical-align: middle;
-    *display: inline;
-    *zoom: 1
+    display: inline;
+    zoom: 1
 }
 
 .fotorama__nav__frame, .fotorama__thumb-border {
@@ -382,7 +382,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    font-family: 'Helvetica Neue',Arial,sans-serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-size: 14px;
     line-height: 1.5;
     color: #000
@@ -502,7 +502,7 @@
 .fotorama__arr--disabled {
     pointer-events: none;
     cursor: default;
-    *display: none;
+    display: none;
     opacity: .1
 }
 

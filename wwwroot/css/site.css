@@ -15,7 +15,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: #E8F6F3;
+    background-color: coral;
 }
 
 a {
@@ -27,11 +27,11 @@ a {
     background-repeat: no-repeat;
     background-position: left top, right bottom, right bottom, 0px 0px;
     background-size: 48% 3px, 3px 65%, 75% 3px, 100% 100%;
-    width: 350px;
+    width: 70%;
     height: 62px;
-    box-shadow: 10px 10px 0px rgb(50, 159, 177);
-    text-align: center;
-    line-height: 60px;
+    box-shadow: 0px 5px 0px gray;
+    text-align: right;
+    line-height: 40px;
     color: black;
     position: relative;
 }
@@ -40,7 +40,7 @@ a {
         content: "";
         height: 3px;
         width: 150px;
-        background: rgb(254, 216, 215);
+        background: coral;
         position: absolute;
         top: 70%;
         left: 29%;
@@ -94,7 +94,7 @@ a {
     }
 
     .navbar-light .navbar-nav .nav-link:hover {
-        color: rgb(50, 159, 177) !important;
+        color: lightcoral !important;
     }
 
     .navbar {
@@ -102,7 +102,7 @@ a {
     }
 
     .active {
-        color: rgb(50, 159, 177) !important;
+        color: lightcoral !important;
     }
 
     .activeMenu {
@@ -111,7 +111,7 @@ a {
         height: 37px;
         transition: all 0.3s ease;
         width: 100%;
-        background: rgb(50, 159, 177);
+        background: coral;
         color: #fff !important;
     }
 /* ==========================================================================
@@ -237,7 +237,7 @@ a {
         margin-bottom: 20px;
         position: relative;
         border-radius: .25rem; /* Bootstrap 5 utiliza unidades de rem */
-        border-top: 3px solid #d2d6de;
+        border-top: 1px solid #d2d6de;
         width: 100%;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
         background: #ffffff;
@@ -271,7 +271,7 @@ a {
         .btnPosicion1.active,
         .open .dropdown-toggle.btnPosicion1 {
             color: #ffffff;
-            background-color: #239B56;
+            background-color: lightpink;
             opacity: 0.9;
             border: none;
         }
@@ -295,7 +295,7 @@ a {
     }
 
     .theadColor {
-        background-color: rgb(50, 159, 177);
+        background-color: rgb(212, 109, 18);
         color: #fff;
     }
 
@@ -330,7 +330,7 @@ a {
     }
 
         .elementosTabla:hover {
-            color: #17A589;
+            color: lightpink;
         }
 
     .btnTablaEliminar {
@@ -340,7 +340,7 @@ a {
     }
 
         .btnTablaEliminar:hover {
-            color: #EC7063 !important;
+            color: #dfbbb7 !important;
         }
 
     .btnTablaHabilitar {
@@ -350,7 +350,7 @@ a {
     }
 
         .btnTablaHabilitar:hover {
-            color: #196F3D;
+            color: sandybrown;
         }
 
     .btnAgregarCategoria {
@@ -360,7 +360,7 @@ a {
     }
 
         .btnAgregarCategoria:hover {
-            color: #3498DB !important;
+            color: lightsalmon !important;
         }
 
     .btnTablaImagen {
@@ -370,7 +370,7 @@ a {
     }
 
         .btnTablaImagen:hover {
-            color: #3498DB !important;
+            color: lightpink !important;
         }
 
     #tabla-container {
@@ -496,9 +496,9 @@ a {
         display: inline-flex;
         justify-content: center;
         background-color: transparent;
-        border: 2px solid rgb(50, 159, 177);
+        border: 2px solid salmon;
         border-radius: 30px;
-        color: rgb(50, 159, 177);
+        color: coral;
         padding: 5px 18px 4px 18px;
         font-size: 13px;
         font-weight: bold;
@@ -507,7 +507,7 @@ a {
 
         /* Ajustes para Bootstrap 5 */
         .btn-ovalo:hover {
-            background-color: rgb(50, 159, 177);
+            background-color: lightpink;
             color: #fff;
         }
 
@@ -536,10 +536,10 @@ a {
     }
 
         .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-            background-color: rgb(50, 159, 177);
+            background-color: lightpink;
             cursor: default;
             font-weight: bold;
-            border: 1px solid rgb(50, 159, 177);
+            border: 1px solid lightcoral;
             border-bottom-color: transparent;
             color: #fff !important;
         }
@@ -769,7 +769,7 @@ a {
     }
 
         .fondoAzulOscuroTabla:first-child {
-            box-shadow: inset 3px 0 #000080;
+            box-shadow: inset 3px 0 lightseagreen;
         }
 
     .fondoTurquesaTabla {
@@ -777,7 +777,7 @@ a {
     }
 
         .fondoTurquesaTabla:first-child {
-            box-shadow: inset 3px 0 #30D5C8;
+            box-shadow: inset 3px 0 lightseagreen;
         }
 
     .fondoGrisFila_1 {
@@ -800,12 +800,12 @@ a {
         background: #eaf8fc;
         background-image: -moz-linear-gradient(#fff, #d4e8ec);
         background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #d4e8ec),color-stop(1, #fff));
-        -moz-border-radius: 35px;
-        border-radius: 35px;
+        
+        
         border-width: 1px;
         border-style: solid;
         border-color: #c4d9df #a4c3ca #83afb7;
-        width: 100%;
+        width: 60%;
         height: 52px;
         padding: 10px;
         /*margin: -7px auto 30px;*/
@@ -823,10 +823,10 @@ a {
         padding: 2px 20px;
         height: 30px;
         width: 100%;
-        border: 1px solid #a4c3ca;
+        /* border: 1px solid #a4c3ca; */
         background: #f1f1f1;
-        -moz-border-radius: 50px 3px 3px 50px;
-        border-radius: 50px;
+        /* -moz-border-radius: 50px 3px 3px 50px;
+        border-radius: 50px; */
         -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
         -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
@@ -851,7 +851,7 @@ a {
         padding: 0;
         width: 90px;
         cursor: pointer;
-        font: bold 14px Arial, Helvetica;
+        font: bold 14px;
         color: #23441e;
         text-shadow: 0 1px 0 rgba(255,255,255,0.5);
     }
