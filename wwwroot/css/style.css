@@ -10,9 +10,9 @@
 # General
 --------------------------------------------------------------*/
 body {
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 22px;
-    color: #444444;
+    color: #128C7E;
 }
 
 a {
@@ -21,7 +21,7 @@ a {
 }
 
     a:hover {
-        color: #ed502e !important;
+        color: #128C7E !important;
         text-decoration: none;
     }
 
@@ -31,7 +31,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 /*--------------------------------------------------------------
@@ -135,7 +135,7 @@ h6 {
         }
 
         #header .logo img {
-            max-height: 40px;
+            max-height: 90px;
             /*background-image: url('../img/logoelpalo1(rojo).png');*/
         }
 
@@ -513,7 +513,7 @@ h6 {
     }
 
 #hero .btn-get-started {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: 500;
     font-size: 14px;
     letter-spacing: 1px;
@@ -609,7 +609,7 @@ section {
         letter-spacing: 2px;
         text-transform: uppercase;
         color: #aaaaaa;
-        font-family: 'Courier New', Courier, monospace;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 
         .section-title h2::after {
@@ -627,7 +627,7 @@ section {
         font-size: 36px;
         font-weight: 700;
         text-transform: uppercase;
-        font-family: 'Courier New', Courier, monospace;        
+        font-family: Verdana, Geneva, Tahoma, sans-serif;        
         color: #0f2f57;
     }
 
@@ -667,7 +667,7 @@ section {
 }
 
 .about .content .btn-learn-more {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
         font-weight: 600;
     font-size: 14px;
     letter-spacing: 1px;
@@ -848,7 +848,7 @@ section {
     }
 
     .cta .cta-btn {
-        font-family: 'Courier New', Courier, monospace;        
+        font-family: Verdana, Geneva, Tahoma, sans-serif;        
         font-weight: 600;
         font-size: 14px;
         letter-spacing: 1px;
@@ -892,7 +892,7 @@ section {
             color: #444;
             transition: all 0.3s ease-in-out;
             border-bottom: 2px solid #fff;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
             .portfolio #portfolio-flters li:hover,
@@ -1735,7 +1735,7 @@ section {
                 font-size: 14px;
                 line-height: 24px;
                 margin-bottom: 0;
-                font-family: 'Courier New', Courier, monospace;            }
+                font-family: Verdana, Geneva, Tahoma, sans-serif;         }
 
         #footer .footer-top .social-links a {
             font-size: 35px;
@@ -2045,3 +2045,8 @@ section {
     .listaMarcas:hover {
         color: black !important;
     }
+    
+#Home * {
+    all: unset;
+    }
+      

@@ -15,7 +15,7 @@ html {
 
 body {
     margin-bottom: 60px;
-    background-color: coral;
+    background-color: peachpuff;
 }
 
 a {
@@ -677,7 +677,7 @@ a {
     Clase para modificar el color de fondo de los Registros de las Tablas.
 ========================================================================== */
     .fondoRojoTabla {
-        background-color: rgba(241, 148, 138, 0.15) !important;
+        background-color: rgb(184, 183, 183) !important;
     }
 
         .fondoRojoTabla:first-child {
@@ -781,15 +781,15 @@ a {
         }
 
     .fondoGrisFila_1 {
-        background-color: #ebebeb;
+        background-color: #9c8383;
     }
 
     .fondoGrisFila_2 {
-        background-color: #dcdcdc;
+        background-color: #9c8383;
     }
 
     .fondoGrisFila_3 {
-        background-color: #cecece;
+        background-color: #9c8383;
     }
 
 
@@ -997,3 +997,6 @@ a {
         .cerrarMsjError i.bi-x {
             font-size: 1.2em;
         }
+        #Home * {
+            all: unset;
+            }

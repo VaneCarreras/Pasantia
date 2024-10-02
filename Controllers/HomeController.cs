@@ -59,7 +59,7 @@ namespace Pasantia.Controllers
         public async Task<JsonResult> InicializarUsuario()
         {
             // Correo electrónico del usuario
-            string email = "admin@elpalo.com";
+            string email = "admin@aceros.com";
 
             // Verificamos si el usuario ya existe
             var usuario = await _userManager.FindByEmailAsync(email);
@@ -68,7 +68,7 @@ namespace Pasantia.Controllers
             {
                 // Creamos el usuario si no existe
                 var user = new IdentityUser { UserName = email, Email = email };
-                var result = await _userManager.CreateAsync(user, "admin.elpalo");
+                var result = await _userManager.CreateAsync(user, "admin.aceros");
 
                 return Json(result.Succeeded);
             }
