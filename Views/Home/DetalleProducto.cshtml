@@ -1,0 +1,164 @@
+﻿@model Pasantia.Models.Producto
+
+@{
+    ViewData["Title"] = "Detalle del Producto";
+    Layout = "~/Views/Shared/LayoutPublico.cshtml";
+    @* Layout = null; *@
+}
+
+<body class="index-page">
+<main id="main">
+<!-- Product Detail Start -->
+<section class="portfolio-details" style="margin-top: 60px;background-color: #E8F6F3;">
+    <input type="hidden" id="ProductoID" value="@ViewBag.Producto" />
+
+    <div class="container">
+
+        <div class="row gy-4" style="margin-right: 6px;margin-left: 6px;">
+
+            <div class="col-lg-8 portfolio-imgPrincipal">
+                <div id="imagenGrande"></div>
+
+                <div class="row row-cols-md-3 g-4" id="imagenChica"></div>
+            </div>
+
+            <div class="col-lg-4" id="Info-Producto"></div>
+
+        </div>
+
+    </div>
+
+    <a href="~/Home/Catalogo#cta" class="volver-button d-flex align-items-center justify-content-center" title="Volver">
+        <i class="bi bi-arrow-left"></i>
+    </a>
+
+</section>
+</main>
+
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        window.onload = InfoProducto();
+
+        
+        //**************************************
+        //FUNCIÓN PARA CAMBIAR LA IMAGEN GRANDE
+        //**************************************
+        function cambiarImagenGrande(imagenBase64) {
+            $("#imagenGrande").empty().append(
+                `<img style="width:100%;" src="data:image/jpeg;base64,${imagenBase64}" alt="" >`
+            );
+        }
+        
+        //********************************************************************************
+        // FUNCIÓN PARA AGREGAR LA IMAGEN PEQUEÑA COMO IMAGEN GRANDE CUANDO HACEMOS CLICK
+        //********************************************************************************
+        function agregarImagenChica(imagenBase64, indice) {
+            const imagenId = `imagenChica${indice}`;
+
+            $("#imagenChica").append(
+                ` <div class="col">
+                          <div class="card cardDetalle">
+                               <img id="${imagenId}" src="data:image/jpeg;base64,${imagenBase64}" alt ="" style = "cursor:pointer;" class="card-img-top" > 
+                          </div>
+                  </div>`
+            );
+
+            // Asignamos función onclick a la imagen pequeña
+            $(`#${imagenId}`).on('click', function () {
+                // Cambiar la imagen grande al hacer clic
+                cambiarImagenGrande(imagenBase64);
+            });
+        }
+        //********************************************************************************
+        // FUNCIÓN PARA AGREGAR TODA LA INFORMACIÓN DEL PRODUCTO EN LA VISTA DEL DETALLE
+        //********************************************************************************
+        function InfoProducto() {
+            let productoID = document.querySelector('#ProductoID').value;
+
+            $("#Info-Producto").empty();
+            $("#imagenGrande").empty();
+            $("#imagenChica").empty();
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/BuscarProductoDetalle',
+                data: { ProductoID: productoID },
+                success: function (producto) {
+                    console.log(producto);
+
+                    //////////////////CÓDIGO PARA MOSTRAR LAS CATEGORIAS////////////////////
+                    var categoriasMostrar = '<li><strong>Categoría</strong>:  </li>';
+
+                    // Obtenemos el array de strings con las categorías
+                    for (var i = 0; i < producto.nombreCategorias.length; i++) {
+                        // Agregamos la categoría al HTML de la vista
+                        categoriasMostrar += producto.nombreCategorias[i];
+
+                        // Agregamos una coma y un espacio entre categorías (excepto la última)
+                        if (i < producto.nombreCategorias.length - 1) {
+                            categoriasMostrar += ', ';
+                        }
+                    }
+
+                    categoriasMostrar += '</p></div>';
+                    ////////////////////FIN CÓDIGO PARA MOSTRAR LAS CATEGORIAS////////////////////
+
+                    var condicionProducto = "USADO";
+                    if (producto.condicionProducto == 2) {
+                        condicionProducto = "REACONDICIONADO";
+                    }
+
+                    $("#Info-Producto").append(
+                        '<div class="portfolio-info">' +
+                        '<h3>' + producto.descripcion + ' '  + '</h3>' +
+                        '<ul>' +
+                        @* '<li><strong>Estado</strong>: ' + generarEstrellas(producto.estado) + '</li>' + *@
+                        '<li><strong>Marca</strong>: ' + producto.marcaNombre + '</li>' +
+                        @* '<li><strong>Cond. Producto</strong>: ' + condicionProducto + '</li>' + *@
+                        @* '<li><strong>Detalle</strong>: ' + producto.detalle + '</li>' + *@
+                         categoriasMostrar + 
+                        '</ul>' +
+                        '</div>'
+                    );
+
+
+                    // Verificamos si hay imágenes asociadas al producto
+                    if (producto.imagenesProductos && producto.imagenesProductos.length > 0) {
+                        // Agregamos la imagen grande
+                        cambiarImagenGrande(producto.imagenesProductos[0]);
+
+                        // Recorremos todas las imágenes y las agregamos como imágenes pequeñas
+                        for (let i = 0; i < producto.imagenesProductos.length; i++) {
+                            agregarImagenChica(producto.imagenesProductos[i], i);
+                        }
+                    } else {
+                        // Si no hay imágenes mostramos un mensaje
+                        var mensaje = $("<p style='font-size:16px; color:red; text-align:center; font-weight:bold;'> No hay imágenes asociadas para este producto.<p>");
+                        $("#imagenGrande").empty().append(mensaje);
+                    }
+                },
+            });
+        }
+
+
+        //******************************************************************
+        //FUNCIÓN PARA GENERAR ESTRELLAS DEPENDIENDO DEL ESTADO DEL PRODUCTO
+        //******************************************************************
+        @* function generarEstrellas(estado) {
+            let estrellasHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                if (i <= estado) {
+                    estrellasHTML += '<span class="star-filled" style="font-size: 30px;color:green;">★</span>';
+                } else {
+                    estrellasHTML += '<span class="star-empty" style="font-size: 30px;color:green;">☆</span>';
+                }
+            }
+
+            return estrellasHTML;
+        } *@
+    </script>
+}
+
+    
+</body>

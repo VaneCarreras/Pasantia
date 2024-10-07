@@ -83,5 +83,21 @@ namespace Pasantia.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+   
+        // Simulación de productos en la "base de datos"
+        private static readonly List<Producto> productos = new List<Producto>
+        {
+            new Producto { ProductoID = 1}
+            // Agrega más productos aquí si lo deseas
+        };
+
+        // EndPoint que devuelve la lista de productos
+        [HttpGet]
+        public IActionResult GetProductos()
+        {
+            return Ok(productos);
+        }
     }
+
+   
 }

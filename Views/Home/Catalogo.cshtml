@@ -1,0 +1,264 @@
+@model IEnumerable<Pasantia.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Catálogo";
+    Layout = "~/Views/Shared/LayoutPublico.cshtml";
+    @* Layout = null; *@
+}
+
+      @* <link href="~/css/style.css" rel="stylesheet"> *@
+
+<body class="index-page">
+<main id="main">
+
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+        <div class="container" data-aos="zoom-in">
+            <div class="text-center">
+                <h3 style="font-size: 40px;">PRODUCTOS</h3>
+            </div>
+        </div>
+    </section>
+    <!-- End Cta Section -->
+    <!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog" style="background-color: #E3F2FD;">
+        <div class="container" data-aos="fade-up">
+
+            <div class="row">
+
+                <div class="col-lg-3">
+
+                    <div class="sidebar">
+                        <input type="hidden" id="CategoriaID" value="0" />
+                        <h3 class="sidebar-title">CATEGORÍAS</h3>
+                        <div class="sidebar-item categories">
+                            <ul id="ul-categorias"></ul>
+                        </div>
+                    </div>
+                    <div class="sidebar">
+                        <input type="hidden" id="MarcaID" value="0" />
+                        <h3 class="sidebar-title">MARCAS</h3>
+                        <div class="sidebar-item categories">
+                            <ul id="ul-marcas"></ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-9 entries">
+                    <div id="tarjetas-productos" class="row"></div>
+                </div>
+                <!-- End blog entries list -->
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección de paginación -->
+    <section class="sectionPaginacion">
+        <div id="pagination"></div>
+    </section>
+
+</main>
+<!-- End #main -->
+@section Scripts{
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/twbs-pagination.1.4.2.min.js"></script>
+    <script>
+        //*************************************
+        //INICIALIZAMOS LAS VARIABLES GLOBALES
+        //*************************************
+        var filtroCategoria = [];
+        var filtroMarca = [];
+        var pageNumber = 1;
+
+        window.onload = CargarVista();
+
+        function CargarVista() {
+            BuscarCategorias();
+            BuscarMarcas();
+            MostrarProductosFiltrados();
+            //BuscarProductos();
+        }
+
+
+        //*******************************************************************************
+        //FUNCIÓN PARA BUSCAR LAS CATEGORÍAS Y ARMAR DINAMICAMENTE EL SIDEBAR CON LOS CHECKS
+        //*******************************************************************************
+        function BuscarCategorias() {
+            $("#ul-categorias").empty();
+            $.ajax({
+                type: "POST",
+                url: '../../Categorias/BuscarCategoriasProductos',
+                data: {},
+                success: function (categoriasMostrar) {
+                    $("#ul-categorias").empty();
+                    $.each(categoriasMostrar, function (index, categoria) {
+                        $("#ul-categorias").append('<ul>' +
+                            '<li data-id="' + categoria.categoriaID + '">' +
+                            '<input type="checkbox" class="filtro-checkbox" data-tipo="1" data-id="' + categoria.categoriaID + '" />' +
+                            '<a style="cursor:pointer; font-weight:bold; font-size:14px;margin-left: 5px;">' +
+                            categoria.categoriaNombre + '<span> (' + categoria.cantidadProducto + ') </span>' +
+                            '</a>' +
+                            '</li>');
+                    });
+
+                    // Agregar controlador de eventos para los checkboxes de categorías
+                    $('.filtro-checkbox[data-tipo="1"]').on('change', function () {
+                        console.log('Checkbox de categoría cambiado. ID de categoría:', $(this).data('id'));
+                        if ($(this).prop('checked')) {
+                            // Desmarcar las demás checkboxes de categorías
+                            $('.filtro-checkbox[data-tipo="1"]').not(this).prop('checked', false);
+                        }
+
+                        // Actualizar el filtro de categorías
+                        filtroCategoria = $(this).prop('checked') ? [$(this).data('id')] : [];
+                        MostrarProductosFiltrados();
+                    });
+                },
+            });
+        }
+
+        //*******************************************************************************
+        //FUNCIÓN PARA BUSCAR LAS MARCAS Y ARMAR DINAMICAMENTE EL SIDEBAR CON LOS CHECKS
+        //*******************************************************************************
+        function BuscarMarcas() {
+            $("#ul-marcas").empty();
+            $.ajax({
+                type: "POST",
+                url: '../../Marcas/BuscarTodasMarcas',
+                data: {},
+                success: function (marcasMostrar) {
+                    $("#ul-marcas").empty();
+                    $.each(marcasMostrar, function (index, marca) {
+                        $("#ul-marcas").append('<ul>' +
+                            '<li data-id="' + marca.marcaID + '">' +
+                            '<input type="checkbox" class="filtro-checkbox" data-tipo="0" data-id="' + marca.marcaID + '" />' +
+                            '<a style="cursor:pointer; font-weight:bold; font-size:14px;margin-left: 5px;">' +
+                            marca.marcaNombre + '<span> (' + marca.cantidadProductos + ') </span>' +
+                            '</a>' +
+                            '</li>');
+                    });
+
+                    // Agregar controlador de eventos para los checkboxes de marcas
+                    $('.filtro-checkbox[data-tipo="0"]').on('change', function () {
+                        console.log('Checkbox de marca cambiado. ID de marca:', $(this).data('id'));
+                        if ($(this).prop('checked')) {
+                            // Desmarcar las demás checkboxes de marcas
+                            $('.filtro-checkbox[data-tipo="0"]').not(this).prop('checked', false);
+                        }
+
+                        // Actualizar el filtro de marcas
+                        filtroMarca = $(this).prop('checked') ? [$(this).data('id')] : [];
+                        MostrarProductosFiltrados();
+                    });
+                },
+            });
+        }
+
+        //**************************************************************************
+        //FUNCIÓN PARA MOSTRAR LOS PRODUCTOS FILTRADOS POR LOS CHECK SELECCIONADOS
+        //**************************************************************************
+        function MostrarProductosFiltrados() {
+            // Llamar a la función de búsqueda de productos con los filtros seleccionados
+            BuscarProductos(filtroMarca, filtroCategoria);
+        }
+
+        //***************************************************
+        //FUNCIÓN PARA BUSCAR LOS PRODUCTOS
+        //***************************************************
+
+        function BuscarProductos(marcaID, categoriaID, pageNumber) {
+
+            $("#tarjetas-productos").empty();
+            $.ajax({
+                type: "POST",
+                url: '../../Productos/BuscarProductosCatalogo',
+                data: { MarcaID: marcaID, CategoriaID: categoriaID, pageNumber: pageNumber },
+                success: function (data) {
+
+                    var productos = data.productos;
+                    var totalPaginas = data.totalPaginas;
+
+                    $("#tarjetas-productos").empty();
+
+                    if (productos.length > 0) {
+                        $.each(productos, function (index, producto) {
+                            //Creamos una variable para acortar el nombre del producto si supera los 15 caracteres y ponemos ... (Lo hacemos para que todas las cards sean iguales)
+                            var cortarDescripcion = producto.descripcion.length > 15 ? producto.descripcion.substring(0, 15) + '...' : producto.descripcion;
+
+                            //Creamos una variable para acortar el detalle del producto si supera los 25 caracteres y ponemos ... (Lo hacemos para que todas las cards sean iguales)
+                            //var cortarDetalle = producto.detalle.length > 20 ? producto.detalle.substring(0, 20) + '...' : producto.detalle;
+
+                            $("#tarjetas-productos").append('<div class="col-lg-4 col-md-6 col-6">' +
+                                '<div class="product-card" onclick = "VerVistaProducto(' + producto.productoID + ')" style="cursor:pointer;">' +
+                                '<img src="data:image/jpeg;base64,' + producto.base64 + '" alt="">' +
+                                '<h5 style="display: inline-block;margin-right: 10px;">' + cortarDescripcion + '</h5>' +
+                                //'<p style="text-transform:uppercase;display: inline-block;font-size: 14px;">' + producto.codigo + '</p>' +
+                                '<p style="margin-bottom: 4px;font-size: 14px;"><strong>Marca:</strong> <br>' + producto.marcaNombre + '</p>' +
+                                '<p style="margin-bottom: 4px;font-size: 14px;"><strong>Categoría:</strong> <br>' + producto.categoriaNombre + '</p>' +
+
+                                @* '<p style="margin-bottom: 4px;font-size: 14px;"><strong>Condición:</strong> <br>' + producto.condicionProductoString + '</p>' +
+                                '<p style="margin-bottom: 4px;font-size: 14px;"><strong>Estado:</strong> <br>' + mostrarEstrellas(producto.estado) + '</p>' + *@
+                                //'<p style="margin-bottom: 4px;font-size: 14px;"><strong>Detalle:</strong> ' + cortarDetalle + '</p>' +
+                                '</div></div>');
+                        });
+
+                        // Configurar la paginación al cargar la página
+                        $('#pagination').twbsPagination({
+                            totalPages: totalPaginas,
+                            visiblePages: 1,
+                            onPageClick: function (event, page) {
+                                BuscarProductos($('#MarcaID').val(), $('#CategoriaID').val(), page);
+                            },
+                            first: 'Primera',
+                            prev: '<span aria-hidden="true">&laquo;</span>',
+                            next: '<span aria-hidden="true">&raquo;</span>',
+                            last: 'Última'
+                        });
+                    } else {
+                        // Manejar el caso en que no hay productos
+                        $("#tarjetas-productos").append('<p>No se encontraron productos.</p>');
+                        $('#pagination-container').twbsPagination('destroy');
+                    }
+                },
+                error: function (error) {
+                    console.error("Error al cargar productos: ", error);
+                }
+            });
+        }
+
+        //***************************************************
+        //FUNCIÓN PARA MOSTRAR LAS ESTRELLAS EN EL ESTADO
+        //***************************************************
+        @* function mostrarEstrellas(estado) {
+            let estrellasHTML = '';
+
+            for (let i = 1; i <= 5; i++) {
+                if (i <= estado) {
+                    estrellasHTML += '<span class="star-filled" style="color:green;">★</span>';
+                } else {
+                    estrellasHTML += '<span class="star-empty" style="color:green;">☆</span>';
+                }
+            }
+
+            return estrellasHTML;
+        } *@
+
+        //***************************************************
+        //FUNCIÓN PARA REDIRIGIR A LA VISTA DETALLEPRODUCTO
+        //***************************************************
+        function VerVistaProducto(productoID) {
+            if (productoID != 0) {
+                location.href = "../../Home/DetalleProducto/" + productoID;
+            }
+        }
+
+    </script>
+
+
+}
+
+    
+</body>

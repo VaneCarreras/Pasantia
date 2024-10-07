@@ -2,11 +2,11 @@
 
 @{
     ViewData["Title"] = "Home Page";
-    Layout = null;
-    @* Layout = "~/Views/Shared/LayoutPublico.cshtml"; *@
+    @* Layout = null; *@
+    Layout = "~/Views/Shared/LayoutPublico.cshtml";
 }
 
-<head>
+@* <head>
    <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Index - Pasantía</title>
@@ -39,11 +39,11 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head> 
+</head> *@
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center fixed-top">
+  @*<header id="header" class="header d-flex align-items-center fixed-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
@@ -57,8 +57,9 @@
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">Nosotros</a></li>
           <li><a href="#services">Servicios</a></li>
-          <li><a href="#portfolio">Productos</a></li>
+          <li><a href="~/Home/Catalogo#cta">Productos</a></li>
           <li><a href="#team">Equipo</a></li>
+          <li><a href="#faq">FAQ</a></li>
           @* <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -75,14 +76,14 @@
               <li><a href="#">Dropdown 3</a></li>
               <li><a href="#">Dropdown 4</a></li>
             </ul>
-          </li> *@
+          </li> @*
           <li><a href="#contact">Contactanos</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
     </div>
-  </header> 
+  </header>  *@
 
   <main class="main">
 
@@ -101,6 +102,11 @@
 
     <!-- About Section -->
     <section id="about" class="about section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Nosotros</h2>
+        <p>Somos y nuestra historia es:</p>
+      </div><!-- End Section Title -->
 
       <div class="container">
 
@@ -201,7 +207,7 @@
 
     </section><!-- /Services Section -->
 
-    <!-- Stats Section -->
+    @* <!-- Stats Section -->
     <section id="stats" class="stats section light-background">
 
       <div class="container" data-aos="fade-up" data-aos-delay="100">
@@ -244,9 +250,9 @@
 
       </div>
 
-    </section><!-- /Stats Section -->
+    </section><!-- /Stats Section --> *@
 
-    <!-- Call To Action Section -->
+    @* <!-- Call To Action Section -->
     <section id="call-to-action" class="call-to-action section accent-background">
 
       <img src="~/img/cta-bg.jpg" alt="">
@@ -263,9 +269,30 @@
         </div>
       </div>
 
-    </section><!-- /Call To Action Section -->
+    </section><!-- /Call To Action Section --> *@
 
-    <!-- Portfolio Section -->
+
+<!-- Filtros -->
+    @* <div class="container mt-4">
+        <ul class="portfolio-filters">
+            <li class="filter-active" data-filter="*">Todos</li>
+            <li data-filter="categoria1">Categoría 1</li>
+            <li data-filter="categoria2">Categoría 2</li>
+            <li data-filter="marca1">Marca 1</li>
+            <li data-filter="marca2">Marca 2</li>
+        </ul>
+    </div>
+
+    <!-- Contenedor de Productos -->
+    <div class="container">
+        <div class="row" id="products-container">
+            <!-- Aquí se cargarán los productos -->
+        </div>
+    </div> *@
+
+
+
+     @* <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section">
 
       <!-- Section Title -->
@@ -284,8 +311,8 @@
             <li data-filter=".filter-product">Marca</li>
           </ul><!-- End Portfolio Filters -->
 
-          <div class="row gy-4 isotope-container" data-aos="fade-up" data-aos-delay="200">
-
+          <div class="row gy-4 isotope-container products-container" data-aos="fade-up" data-aos-delay="200"> *@
+@* 
             <div class="col-lg-4 col-md-6 portfolio-item isotope-item filter-app">
               <img src="~/img/portfolio/app-1.jpg" class="img-fluid" alt="">
               <div class="portfolio-info">
@@ -404,7 +431,7 @@
                 <a href="~/img/portfolio/books-3.jpg" title="Branding 3" data-gallery="portfolio-gallery-book" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
                 <a href="portfolio-details.html" title="More Details" class="details-link"><i class="bi bi-link-45deg"></i></a>
               </div>
-            </div><!-- End Portfolio Item -->
+            </div><!-- End Portfolio Item --> *@
 
           </div><!-- End Portfolio Container -->
 
@@ -414,7 +441,7 @@
 
     </section><!-- /Portfolio Section -->
 
-    <!-- Testimonials Section -->
+    @* <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section light-background">
 
       <!-- Section Title -->
@@ -524,7 +551,7 @@
 
       </div>
 
-    </section><!-- /Testimonials Section -->
+    </section><!-- /Testimonials Section --> *@
 
     <!-- Team Section -->
     <section id="team" class="team section">
@@ -599,7 +626,7 @@
 
     </section><!-- /Team Section -->
 
-    <!-- Pricing Section -->
+    @* <!-- Pricing Section -->
     <section id="pricing" class="pricing section">
 
       <!-- Section Title -->
@@ -661,7 +688,7 @@
 
       </div>
 
-    </section><!-- /Pricing Section -->
+    </section><!-- /Pricing Section --> *@
 
     <!-- Faq Section -->
     <section id="faq" class="faq section light-background">
@@ -825,7 +852,7 @@
     </section><!-- /Contact Section -->
 
   </main>
-
+@* 
   <footer id="footer" class="footer dark-background">
 
     <div class="container footer-top">
@@ -916,8 +943,63 @@
   <script src="~/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-  <script src="~/js/main.js"></script>
+  <script src="~/js/main.js"></script> *@
+
+      @* <!-- JavaScript para obtener los productos y renderizarlos -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('products-container');
+
+            // Fetch para obtener los productos de la API
+            fetch('../../Productos/BuscarTodosProductos')
+                .then(response => response.json())
+                .then(data => {
+                    renderProducts(data);
+                });
+
+            // Función para renderizar los productos
+            function renderProducts(productos) {
+                container.innerHTML = ''; // Limpiar el contenedor
+                productos.forEach(producto => {
+                    container.innerHTML += `
+                        <div class="col-lg-4 col-md-6 portfolio-item ${producto.CategoriaID} ${producto.MarcaID}">
+                            <img src="${producto.ImagenesProducto}" class="img-fluid" alt="${producto.Descripcion}">
+                            <div class="portfolio-info">
+                                <h4>${producto.Descripcion}</h4>
+                                
+                                <a href="${producto.ImagenesProducto}" class="glightbox preview-link"><i class="bi bi-zoom-in"></i></a>
+                            </div>
+                        </div>
+                    `;
+                });
+                initLightbox();
+            }
+
+            // Función para inicializar el Glightbox
+            function initLightbox() {
+                const lightbox = GLightbox();
+            }
+
+            // Filtro dinámico de productos
+            const filters = document.querySelectorAll('.portfolio-filters li');
+            filters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    const filterValue = this.getAttribute('data-filter');
+                    const items = document.querySelectorAll('.portfolio-item');
+                    
+                    // Filtrar los productos
+                    items.forEach(item => {
+                        if (filterValue === '*' || item.classList.contains(filterValue)) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script> *@
 
 </body>
 
-</html>
+

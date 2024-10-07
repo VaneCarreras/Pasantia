@@ -173,25 +173,25 @@ namespace Pasantia.Controllers
         }
 
 
-        // public JsonResult BuscarCategoriasProductos()
-        // {
-        //     // var categorias = _context.Categoria.Include(c => c.ProductoCategorias).ToList();
-        //     var categorias = _context.Categoria.ToList();
+        public JsonResult BuscarCategoriasProductos()
+        {
+            // var categorias = _context.Categoria.Include(c => c.ProductoCategorias).ToList();
+            var categorias = _context.Categoria.ToList();
 
-        //     List<CategoriaMostrar> categoriasMostrar = new List<CategoriaMostrar>();
-        //     foreach (var categoria in categorias.OrderBy(c => c.CategoriaNombre))
-        //     {
-        //         var categoriaMostrar = new CategoriaMostrar()
-        //         {
-        //             CategoriaID = categoria.CategoriaID,
-        //             CategoriaNombre = categoria.CategoriaNombre,
-        //             // CantidadProducto = categoria.ProductoCategorias.Count
-        //         };
-        //         categoriasMostrar.Add(categoriaMostrar);
-        //     }
+            List<CategoriaMostrar> categoriasMostrar = new List<CategoriaMostrar>();
+            foreach (var categoria in categorias.OrderBy(c => c.CategoriaNombre))
+            {
+                var categoriaMostrar = new CategoriaMostrar()
+                {
+                    CategoriaID = categoria.CategoriaID,
+                    CategoriaNombre = categoria.CategoriaNombre,
+                    // CantidadProducto = categoria.ProductoCategorias.Count
+                };
+                categoriasMostrar.Add(categoriaMostrar);
+            }
 
-        //     return Json(categoriasMostrar);
-        // }
+            return Json(categoriasMostrar);
+        }
 
     }
 }

@@ -355,8 +355,8 @@ namespace Pasantia.Controllers
         }
 
 
-    }
-}
+    
+
 
 
 
@@ -373,69 +373,116 @@ namespace Pasantia.Controllers
 
 
 
-//         public JsonResult BuscarProductosCatalogo(int MarcaID, int CategoriaID, int pageNumber = 1, int pageSize = 12)
-//         {
-//             var productosCargados = _context.Producto.Include(p => p.ImagenProducto).Include(p => p.Categoria.ProductoCategorias).AsQueryable();
+        public JsonResult BuscarProductosCatalogo(int MarcaID, int CategoriaID, int pageNumber = 1, int pageSize = 12)
+{
+    var productosCargados = _context.Producto
+        .Include(p => p.ImagenesProducto)
+        .Include(p => p.Categoria) // Asegúrate de incluir la categoría aquí
+        .AsQueryable();
 
-//             if (MarcaID != 0)
-//             {
-//                 // Filtrar por marca si se selecciona una Marca en la vista
-//                 productosCargados = productosCargados.Where(p => p.MarcaID == MarcaID);
-//             }
+    if (MarcaID != 0)
+    {
+        productosCargados = productosCargados.Where(p => p.MarcaID == MarcaID);
+    }
 
-//             if (CategoriaID != 0)
-//             {
-//                 // Filtrar por categoría si se selecciona una Categoría en la vista
-//                 productosCargados = productosCargados.Where(p => p.Categoria.ProductoCategorias.Any(pc => pc.CategoriaID == CategoriaID));
-//             }
+    if (CategoriaID != 0)
+    {
+        productosCargados = productosCargados.Where(p => p.CategoriaID == CategoriaID);
+    }
 
-//             // Obtener el total de productos antes de la paginación
-//             int totalProductos = productosCargados.Count();
+    int totalProductos = productosCargados.Count();
 
-//             // Aplicar paginación después de los filtros
-//             var productosPaginados = productosCargados
-//                 .OrderBy(p => p.ProductoID)
-//                 .Skip((pageNumber - 1) * pageSize)
-//                 .Take(pageSize)
-//                 .ToList();
+    var productosPaginados = productosCargados
+        .OrderBy(p => p.ProductoID)
+        .Skip((pageNumber - 1) * pageSize)
+        .Take(pageSize)
+        .ToList();
 
-//             List<ProductoMostrar> listaDeProductos = new List<ProductoMostrar>();
+    List<ProductoMostrar> listaDeProductos = new List<ProductoMostrar>();
 
-//             foreach (var p in productosPaginados)
-//             {
-//                 var marcaNombre = (from c in _context.Marca where c.MarcaID == p.MarcaID select c.MarcaNombre).Single();
+    foreach (var p in productosPaginados)
+    {
+        var marcaNombre = _context.Marca
+            .Where(c => c.MarcaID == p.MarcaID)
+            .Select(c => c.MarcaNombre)
+            .SingleOrDefault();
 
-//                 //verif de condicion
 
-//                 //Inicializamos la variable de la imagen
-//                 string imagenString = "";
+        var categoriaNombre = _context.Categoria
+            .Where(c => c.CategoriaID == p.CategoriaID)
+            .Select(c => c.CategoriaNombre)
+            .SingleOrDefault();
 
-//                 // Verificamos si hay imágenes asociadas al producto
-//                 if (p.ImagenProducto != null && p.ImagenProducto.Any())
-//                 {
-//                     // Seleccionamos la primera imagen de la colección y la convertimos a Base64
-//                     imagenString = Convert.ToBase64String(p.ImagenProducto.First().Imagen);
-//                 }
+        string imagenString = "";
 
-//                 //detalle y codigo que no existen esos campos aqui
+        if (p.ImagenesProducto != null && p.ImagenesProducto.Any())
+        {
+            imagenString = Convert.ToBase64String(p.ImagenesProducto.First().Imagen);
+        }
 
-//                 var registro = new ProductoMostrar
-//                 {
-//                     ProductoID = p.ProductoID,
-//                     Descripcion = p.Descripcion,
-//                     MarcaNombre = marcaNombre,
-//                     Estado = p.Estado,
-//                     CantidadImagenes = p.CantidadImagenes,
-//                     Base64 = imagenString
-//                 };
-//                 listaDeProductos.Add(registro);
-//             }
+        var registro = new ProductoMostrar
+        {
+            ProductoID = p.ProductoID,
+            Descripcion = p.Descripcion,
+            MarcaNombre = marcaNombre,
+            CategoriaNombre = categoriaNombre,
+            Base64 = imagenString
+        };
+        listaDeProductos.Add(registro);
+    }
 
-//             // Calcular el total de páginas después de los filtros
-//             int totalPaginas = (int)Math.Ceiling((double)totalProductos / pageSize);
+    int totalPaginas = (int)Math.Ceiling((double)totalProductos / pageSize);
 
-//             return Json(new { Productos = listaDeProductos, TotalPaginas = totalPaginas });
-//         }
+    return Json(new { Productos = listaDeProductos, TotalPaginas = totalPaginas });
+}
+
+public JsonResult BuscarProductoDetalle(int ProductoID)
+{
+    var resultado = new ProductoMostrar();
+
+    if (ProductoID != 0)
+    {
+        var infoProducto = _context.Producto
+            .Include(i => i.ImagenesProducto)
+            .Include(i => i.Categoria) // Incluir la categoría directamente
+            .FirstOrDefault(i => i.ProductoID == ProductoID);
+
+        if (infoProducto != null) // Verificar que el producto exista
+        {
+            var marcaNombre = _context.Marca
+                .Where(c => c.MarcaID == infoProducto.MarcaID)
+                .Select(c => c.MarcaNombre)
+                .SingleOrDefault();
+
+            List<string> imagenesProductos = new List<string>();
+            if (infoProducto.ImagenesProducto != null && infoProducto.ImagenesProducto.Any())
+            {
+                foreach (var imagenProducto in infoProducto.ImagenesProducto)
+                {
+                    string imagenString = Convert.ToBase64String(imagenProducto.Imagen);
+                    imagenesProductos.Add(imagenString);
+                }
+            }
+
+            List<string> categoriasProductos = new List<string>
+            {
+                infoProducto.Categoria.CategoriaNombre // Obtener el nombre de la categoría directamente
+            };
+
+            // Asignar datos a resultado
+            resultado.ProductoID = ProductoID;
+            resultado.Descripcion = infoProducto.Descripcion;
+            resultado.MarcaNombre = marcaNombre;
+            resultado.ImagenesProductos = imagenesProductos;
+            resultado.NombreCategorias = categoriasProductos;
+        }
+    }
+
+    return Json(resultado);
+}
+
+    }
+}
 
 // //no esta verificado
 //         //public JsonResult BuscarProductosCatalogo_SP(int MarcaID, int CategoriaID, int pageNumber = 1, int pageSize = 9)
@@ -458,53 +505,6 @@ namespace Pasantia.Controllers
 
 
 
-//         /////MÉTODOS PARA el detalle del producto//////
-//         public JsonResult BuscarProductoDetalle(int ProductoID)
-//         {
-//             var resultado = new ProductoMostrar();
-
-//             if (ProductoID != 0)
-//             {
-//                 Producto infoProducto = _context.Producto.Include(i => i.ImagenProducto).Include(i => i.Categoria.ProductoCategorias).FirstOrDefault(i => i.ProductoID == ProductoID);
-
-//                 var marcaNombre = (from c in _context.Marca where c.MarcaID == infoProducto.MarcaID select c.MarcaNombre).Single();
-
-//                 List<string> imagenesProductos = new List<string>();  // Inicializamos la lista para las imágenes
-
-//                 // Verificamos si hay imágenes asociadas al producto
-//                 if (infoProducto.ImagenProducto != null && infoProducto.ImagenProducto.Any())
-//                 {
-//                     // Recorremos las imágenes
-//                     foreach (var imagenProducto in infoProducto.ImagenProducto)
-//                     {
-//                         // Convertimos cada imagen a Base64 y la agregamos a la lista
-//                         string imagenString = Convert.ToBase64String(imagenProducto.Imagen);
-//                         imagenesProductos.Add(imagenString);
-//                     }
-//                 }
-
-//                 List<string> categoriasProductos = new List<string>();  // Inicializamos la lista para las categorías
-
-//                 // Verificamos si hay categorías asociadas al producto
-//                 var categoriasAsociadas = _context.Categoria.ProductoCategoria.Where(p => p.ProductoID == ProductoID)
-//                     .Select(pc => pc.Categoria.CategoriaNombre).ToList();
-
-//                 // Agregamos las categorías a la lista
-//                 categoriasProductos.AddRange(categoriasAsociadas);
-
-//                 //codigo no existe
-
-//                 resultado.ProductoID = ProductoID;
-//                 resultado.Descripcion = infoProducto.Descripcion;
-//                 resultado.MarcaNombre = marcaNombre;
-//                 resultado.ImagenesProductos = imagenesProductos;
-//                 resultado.NombreCategorias = categoriasProductos;
-//             }
-
-//             return Json(resultado);
-//         }
-//     }
-// }
 
 
 // //  no se pudo hacer migracion, error con netroles, por eso se comenta, da errores
