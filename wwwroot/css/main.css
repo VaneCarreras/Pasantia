@@ -2472,7 +2472,7 @@ section,
 .sectionPaginacion {
   padding-top: 20px !important;
   padding-bottom: 3px !important;
-  background-color: #E3F2FD;
+  background-color: lightgreen;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2526,7 +2526,7 @@ section,
       }
 
       .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-          background-color: #68A4C4;
+          background-color: lightgreen;
       }
 
   .portfolio-details .portfolio-info {
