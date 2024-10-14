@@ -31,17 +31,23 @@ namespace Pasantia.Controllers
             return View();
         }
 
-        public ActionResult DetalleProducto(int id)
-        {
-            Producto producto = _context.Producto.Find(id);
-            ViewBag.Producto = producto.ProductoID;
-            if (producto == null)
-            {
-                return RedirectToAction("Index"); ;
-            }
+       public ActionResult DetalleProducto(int id)
+{
+    Producto producto = _context.Producto.Find(id);
+    
+    if (producto == null)
+    {
+        // Si el producto es null, redirige a la acción Index
+        return RedirectToAction("Index");
+    }
+    
+    // Si el producto no es null, entonces asigna su ID a ViewBag
+    ViewBag.Producto = producto.ProductoID;
+    
+    // Devuelve la vista con el producto encontrado
+    return View(producto);
+}
 
-            return View(producto);
-        }
 
         public IActionResult Privacy()
         {

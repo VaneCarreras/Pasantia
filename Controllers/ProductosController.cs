@@ -34,12 +34,16 @@ namespace Pasantia.Controllers
 
             //combogralxcondicion
 
-            var marcas = (from usu in _context.Marca select usu).ToList();
+            var marcas = (from m in _context.Marca
+              where m.Eliminado == false  // Filtramos las marcas no eliminadas
+              select m).ToList();
             marcas.Add(new Marca { MarcaID = 0, MarcaNombre = "[SELECCIONE MARCA]" });
             marcas = marcas.OrderBy(a => a.MarcaNombre).ToList();
             ViewBag.MarcaID = new SelectList(marcas, "MarcaID", "MarcaNombre");
 
-            var categorias = (from usu in _context.Categoria select usu).ToList();
+            var categorias = (from c in _context.Categoria
+              where c.Eliminado == false  // Filtramos las marcas no eliminadas
+              select c).ToList();
             categorias.Add(new Categoria { CategoriaID = 0, CategoriaNombre = "[SELECCIONE CATEGORÍA]" });
             categorias = categorias.OrderBy(a => a.CategoriaNombre).ToList();
             ViewBag.CategoriaID = new SelectList(categorias, "CategoriaID", "CategoriaNombre");
