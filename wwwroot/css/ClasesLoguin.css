@@ -2,7 +2,9 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0; /* Elimina el margen predeterminado del cuerpo */
     overflow: hidden; /* Evita el scroll en el cuerpo */
-    background: url('../img/fondos/carparts2.jpg') no-repeat center center fixed; /* Establece la imagen de fondo */
+    /* background-image: url('~/img/construccion2.png'); */
+
+    background: no-repeat center center fixed; /* Establece la imagen de fondo */
     background-size: cover;
     height: 100vh; /* Asegura que el fondo ocupe todo el alto de la ventana */
     width: 100vw; /* Asegura que el fondo ocupe todo el ancho de la ventana */
@@ -155,7 +157,7 @@
         }
 
     .login:not(.loading) button:hover {
-        box-shadow: 0px 1px 3px #2196f3;
+        box-shadow: 0px 1px 3px greenyellow;
     }
 
     .login:not(.loading) button:focus {
@@ -191,3 +193,14 @@ footer {
         margin-top: -40px;
     }
 }
+
+.gradient-custom {
+    /* fallback for old browsers */
+    background: yellow;
+    
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, yellow, yellowgreen);
+    
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, yellow, yellowgreen)
+    }

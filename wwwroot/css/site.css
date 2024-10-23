@@ -19,7 +19,7 @@ body {
 }
 
 a {
-    color: #ffab9d;
+    color: yellowgreen;
     text-decoration: none; /* Quitar el subrayado */
 }
 
@@ -40,7 +40,7 @@ a {
         content: "";
         height: 3px;
         width: 150px;
-        background: coral;
+        background: yellow;
         position: absolute;
         top: 70%;
         left: 29%;
@@ -94,7 +94,7 @@ a {
     }
 
     .navbar-light .navbar-nav .nav-link:hover {
-        color: lightcoral !important;
+        color: greenyellow !important;
     }
 
     .navbar {
@@ -102,7 +102,7 @@ a {
     }
 
     .active {
-        color: lightcoral !important;
+        color: lightyellow !important;
     }
 
     .activeMenu {
@@ -111,7 +111,7 @@ a {
         height: 37px;
         transition: all 0.3s ease;
         width: 100%;
-        background: coral;
+        background: yellow;
         color: #fff !important;
     }
 /* ==========================================================================
@@ -169,18 +169,18 @@ a {
 ========================================================================== */
     /* Botones */
     .botonVerdeSweetAlert {
-        background-color: #378A60;
-        border-color: #0B7541;
+        background-color: yellowgreen;
+        border-color: yellowgreen;
     }
 
         .botonVerdeSweetAlert:active {
-            background-color: #378A60 !important;
-            border-color: #0B7541 !important;
+            background-color: yellowgreen !important;
+            border-color: yellowgreen !important;
         }
 
         .botonVerdeSweetAlert:hover {
-            background-color: #378A60 !important;
-            border-color: #0B7541 !important;
+            background-color: yellowgreen !important;
+            border-color: yellowgreen !important;
             box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(55 138 96 / 29%);
         }
 
@@ -198,18 +198,18 @@ a {
 
     .botonRojoSweetAlert {
         color: #fff !important;
-        background-color: #A93226 !important;
-        border-color: #0B7541;
+        background-color: green !important;
+        border-color: yellowgreen;
     }
 
         .botonRojoSweetAlert:active {
-            background-color: #A93226 !important;
-            border-color: #0B7541 !important;
+            background-color: green !important;
+            border-color: yellowgreen !important;
         }
 
         .botonRojoSweetAlert:hover {
-            background-color: #A93226 !important;
-            border-color: #0B7541 !important;
+            background-color: green !important;
+            border-color: yellowgreen !important;
             box-shadow: 0 0 0 1px #fff, 0 0 0 3px rgb(55 138 96 / 29%);
         }
 
@@ -262,7 +262,7 @@ a {
         border: 0px;
         justify-content: center;
         color: #ffffff;
-        background: rgb(50, 159, 177);
+        background: yellow;
     }
 
         .btnPosicion1:hover,
@@ -271,7 +271,7 @@ a {
         .btnPosicion1.active,
         .open .dropdown-toggle.btnPosicion1 {
             color: #ffffff;
-            background-color: lightpink;
+            background-color: lightyellow;
             opacity: 0.9;
             border: none;
         }
@@ -295,7 +295,7 @@ a {
     }
 
     .theadColor {
-        background-color: rgb(212, 109, 18);
+        background-color: yellowgreen;
         color: #fff;
     }
 
@@ -326,11 +326,11 @@ a {
         font-size: 14px;
         font-weight: bold;
         text-transform: uppercase;
-        color: #212F3D;
+        color: green;
     }
 
         .elementosTabla:hover {
-            color: lightpink;
+            color: lightyellow;
         }
 
     .btnTablaEliminar {
@@ -350,7 +350,7 @@ a {
     }
 
         .btnTablaHabilitar:hover {
-            color: sandybrown;
+            color: greenyellow;
         }
 
     .btnAgregarCategoria {
@@ -360,7 +360,7 @@ a {
     }
 
         .btnAgregarCategoria:hover {
-            color: lightsalmon !important;
+            color: lightyellow !important;
         }
 
     .btnTablaImagen {
@@ -370,7 +370,7 @@ a {
     }
 
         .btnTablaImagen:hover {
-            color: lightpink !important;
+            color: lightyellow !important;
         }
 
     #tabla-container {
@@ -496,9 +496,9 @@ a {
         display: inline-flex;
         justify-content: center;
         background-color: transparent;
-        border: 2px solid salmon;
+        border: 2px solid yellow;
         border-radius: 30px;
-        color: coral;
+        color: yellow;
         padding: 5px 18px 4px 18px;
         font-size: 13px;
         font-weight: bold;
@@ -507,7 +507,7 @@ a {
 
         /* Ajustes para Bootstrap 5 */
         .btn-ovalo:hover {
-            background-color: lightpink;
+            background-color: lightyellow;
             color: #fff;
         }
 
@@ -516,9 +516,9 @@ a {
         display: inline-flex;
         justify-content: center;
         background-color: transparent;
-        border: 2px solid #B03A2E;
+        border: 2px solid green;
         border-radius: 30px;
-        color: #B03A2E;
+        color: green;
         padding: 5px 18px 4px 18px;
         font-size: 15px;
         font-weight: bold;
@@ -526,7 +526,7 @@ a {
     }
 
         .btn-ovaloEliminar:hover {
-            background-color: #B03A2E;
+            background-color: green;
             color: #fff;
         }
 
@@ -536,10 +536,10 @@ a {
     }
 
         .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
-            background-color: lightpink;
+            background-color: greenyellow;
             cursor: default;
             font-weight: bold;
-            border: 1px solid lightcoral;
+            border: 1px solid lightyellow;
             border-bottom-color: transparent;
             color: #fff !important;
         }
@@ -604,7 +604,7 @@ a {
     }
 
         .cruzCerrar:hover {
-            color: #A93226;
+            color: green;
         }
 
     .labelModal {
@@ -615,7 +615,7 @@ a {
     }
 
     .btnCancelarModal {
-        background-color: #A93226;
+        background-color: green;
         color: #fff;
         font-size: 18px;
         border: none;
@@ -626,11 +626,11 @@ a {
     }
 
         .btnCancelarModal:hover {
-            background-color: #E74C3C;
+            background-color: green;
         }
 
     .btnGuardarModal {
-        background-color: #117A65;
+        background-color: yellow;
         color: #fff;
         font-size: 18px;
         border: none;
@@ -641,11 +641,11 @@ a {
     }
 
         .btnGuardarModal:hover {
-            background-color: #27AE60;
+            background-color: yellowgreen;
         }
 
     .btnEspereModal {
-        background-color: #85C1E9;
+        background-color: yellow;
         color: #fff;
         font-size: 18px;
         border: none;
@@ -659,7 +659,7 @@ a {
         /*margin-left: 15px;*/
         font-size: 13px;
         font-weight: 500;
-        color: darkred;
+        color: green;
     }
 
     .inputModalTexto {
@@ -681,7 +681,7 @@ a {
     }
 
         .fondoRojoTabla:first-child {
-            box-shadow: inset 3px 0 #ff0000;
+            box-shadow: inset 3px 0 green;
         }
 
     .fondoNaranjaTabla {
@@ -689,15 +689,15 @@ a {
     }
 
         .fondoNaranjaTabla:first-child {
-            box-shadow: inset 3px 0 #ff851b;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoVerdeTabla {
-        background-color: rgba(0, 138, 39, 0.15) !important;
+        background-color: greenyellow !important;
     }
 
         .fondoVerdeTabla:first-child {
-            box-shadow: inset 3px 0 #008A27;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoAmarilloTabla {
@@ -709,43 +709,43 @@ a {
         }
 
     .fondoAzulTabla {
-        background-color: rgba(0, 115, 183, 0.15) !important;
+        background-color: greenyellow !important;
     }
 
         .fondoAzulTabla:first-child {
-            box-shadow: inset 3px 0 #0073b7;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoRosaTabla {
-        background-color: rgba(255,192,203, 0.30) !important;
+        background-color: greenyellow !important;
     }
 
         .fondoRosaTabla:first-child {
-            box-shadow: inset 3px 0 #FFC0CB;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoSalmonTabla {
-        background-color: rgba(254,195,172, 0.35) !important;
+        background-color: greenyellow !important;
     }
 
         .fondoSalmonTabla:first-child {
-            box-shadow: inset 3px 0 #FEC3AC;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoFucsiaTabla {
-        background-color: rgba(255,0,255, 0.15) !important;
+        background-color: greenyellow !important;
     }
 
         .fondoFucsiaTabla:first-child {
-            box-shadow: inset 3px 0 #FF00FF;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoBordoTabla {
-        background-color: rgba(150,0,0, 0.15) !important;
+        background-color: greenyellow !important;
     }
 
         .fondoBordoTabla:first-child {
-            box-shadow: inset 3px 0 #960000;
+            box-shadow: inset 3px 0 greenyellow;
         }
 
     .fondoGrisTabla {
@@ -769,7 +769,7 @@ a {
     }
 
         .fondoAzulOscuroTabla:first-child {
-            box-shadow: inset 3px 0 lightseagreen;
+            box-shadow: inset 3px 0 lightgreen;
         }
 
     .fondoTurquesaTabla {
@@ -777,7 +777,7 @@ a {
     }
 
         .fondoTurquesaTabla:first-child {
-            box-shadow: inset 3px 0 lightseagreen;
+            box-shadow: inset 3px 0 lightgreen;
         }
 
     .fondoGrisFila_1 {
@@ -804,7 +804,7 @@ a {
         
         border-width: 1px;
         border-style: solid;
-        border-color: #c4d9df #a4c3ca #83afb7;
+        border-color: #c4d9df #a4c3ca lightgreen;
         width: 60%;
         height: 52px;
         padding: 10px;
@@ -818,7 +818,7 @@ a {
     }
 
     #buscar {
-        text-transform: uppercase;
+        /* text-transform: uppercase; */
         text-align: justify;
         padding: 2px 20px;
         height: 30px;
@@ -877,7 +877,7 @@ a {
     /* ----------------------- */
 
     #buscar::-webkit-input-placeholder {
-        color: #9c9c9c;
+        color: grey;
         font-style: italic;
     }
 
@@ -892,7 +892,7 @@ a {
     }
 
     #buscar:focus {
-        border-color: #8badb4;
+        border-color: lightgreen;
         background: #fff;
         outline: none;
     }
@@ -950,7 +950,7 @@ a {
     }
 
     .alert-info {
-        border-color: #00acd6;
+        border-color: yellow;
     }
 
     .alert.custom-alert {

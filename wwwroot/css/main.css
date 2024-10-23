@@ -21,8 +21,8 @@
 :root { 
   --background-color: #ffffff; /* Background color for the entire website, including individual sections */
   --default-color: #444444; /* Default color used for the majority of the text content across the entire website */
-  --heading-color: #2f4d5a; /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #67b0d1; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --heading-color: rgb(85, 85, 15); /* Color for headings, subheadings and title throughout the website */
+  --accent-color: green !important; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff; /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
@@ -30,11 +30,11 @@
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: #ffffff;  /* The default color of the main navmenu links */
-  --nav-hover-color: #67b0d1; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-hover-color: yellow; /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff; /* Used as the background color for mobile navigation menu */
   --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #444444; /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #67b0d1; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+  --nav-dropdown-hover-color: yellow; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
 /* Color Presets - These classes override global colors when applied to any section or element, providing reuse of the sam color scheme. */
@@ -45,18 +45,18 @@
 }
 
 .dark-background {
-  --background-color: #273f49;
+  --background-color: rgb(85, 85, 15);
   --default-color: #ffffff;
   --heading-color: #ffffff;
-  --surface-color: #395c6a;
+  --surface-color: rgb(85, 85, 15);
   --contrast-color: #ffffff;
 }
 
 .accent-background {
-  --background-color: #67b0d1;
+  --background-color: yellow;
   --default-color: #ffffff;
   --heading-color: #ffffff;
-  --surface-color: #8ec4dd;
+  --surface-color: lightyellow;
 }
 
 /* Smooth scroll */
@@ -109,7 +109,7 @@ h6 {
 .php-email-form .sent-message {
   display: none;
   color: #ffffff;
-  background: #059652;
+  background: yellow;
   text-align: center;
   padding: 15px;
   margin-bottom: 24px;
@@ -184,7 +184,7 @@ h6 {
 /* Global Header on Scroll
 ------------------------------*/
 .scrolled .header {
-  --background-color: #4b99bb;
+  --background-color: yellow;
 }
 
 /*--------------------------------------------------------------
@@ -355,6 +355,8 @@ h6 {
     transition: 0.3s;
     background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
   }
+
+  
 
   .navmenu a i:hover,
   .navmenu a:focus i:hover {
@@ -803,7 +805,7 @@ section,
   font-weight: 700;
   line-height: 56px;
   text-transform: uppercase;
-  text-shadow: -1px 0 2px #2f4d5a;
+  text-shadow: -1px 0 2px rgb(85, 85, 15);
 }
 
 .hero p {
@@ -813,7 +815,7 @@ section,
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  text-shadow: -1px 0 2px #2f4d5a;
+  text-shadow: -1px 0 2px rgb(85, 85, 15);
 }
 
 @media (max-width: 640px) {
@@ -1396,7 +1398,7 @@ section,
 }
 
 .pricing ul i {
-  color: #059652;
+  color: yellowgreen;
   font-size: 24px;
   padding-right: 3px;
 }
@@ -1770,7 +1772,7 @@ section,
   }
 
   .clients .swiper-pagination .swiper-pagination-bullet-active {
-      background-color: #e43c5c;
+      background-color: rgb(85, 85, 15);
   }
 
 .swiper-slide img {
@@ -1804,7 +1806,7 @@ section,
 
       .blog .blog-pagination li.active,
       .blog .blog-pagination li:hover {
-          background: #e43c5c;
+          background: rgb(85, 85, 15);
       }
 
           .blog .blog-pagination li.active a,
@@ -1823,11 +1825,11 @@ section,
                 height: 12px;
                 background-color: #fff;
                 opacity: 1;
-                border: 1px solid #68A4C4;
+                border: 1px solid yellow;
             }
     
             .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
-                background-color: #68A4C4;
+                background-color: yellow;
             }
 
 
@@ -2483,7 +2485,7 @@ section,
 }
 
 .page-item.disabled .page-link {
-  color: #0d6efd;
+  color: yellowgreen;
 }
 
 .listaMarcas {
@@ -2522,7 +2524,7 @@ section,
           height: 12px;
           background-color: #fff;
           opacity: 1;
-          border: 1px solid #68A4C4;
+          border: 1px solid yellow;
       }
 
       .portfolio-details .portfolio-details-slider .swiper-pagination .swiper-pagination-bullet-active {
@@ -2532,7 +2534,7 @@ section,
   .portfolio-details .portfolio-info {
       background-color: white;
       padding: 30px;
-      box-shadow: 0px 0 30px rgba(30, 67, 86, 0.5);
+      box-shadow: 0px 0 30px gray;
   }
 
 .portfolio-imgPrincipal {
@@ -2650,7 +2652,7 @@ section,
   .contact .php-email-form .sent-message {
       display: none;
       color: #fff;
-      background: #18d26e;
+      background: yellowgreen;
       text-align: center;
       padding: 15px;
       font-weight: 600;
@@ -2670,7 +2672,7 @@ section,
           width: 24px;
           height: 24px;
           margin: 0 10px -6px 0;
-          border: 3px solid #18d26e;
+          border: 3px solid yellowgreen;
           border-top-color: #eee;
           animation: animate-loading 1s linear infinite;
       }
@@ -2717,5 +2719,17 @@ section,
   100% {
       transform: rotate(360deg);
   }
+
+
+
+
+
 }
+
+.imgcard{
+  width: 25vh;
+  height: 25vh;
+}
+
+
 
