@@ -2,13 +2,15 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0; /* Elimina el margen predeterminado del cuerpo */
     overflow: hidden; /* Evita el scroll en el cuerpo */
-    /* background-image: url('~/img/construccion2.png'); */
 
-    background: no-repeat center center fixed; /* Establece la imagen de fondo */
-    background-size: cover;
-    height: 100vh; /* Asegura que el fondo ocupe todo el alto de la ventana */
-    width: 100vw; /* Asegura que el fondo ocupe todo el ancho de la ventana */
 }
+  
+
+
+.logoLogin {
+    width: 10vw;
+    height: 10vh;
+  }
 
 @keyframes spinner {
     0% {
@@ -39,9 +41,7 @@
     position: relative;
     box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
 }
-.logo-login {
-    width: 281px;
-}
+
 
 .login.loading button {
     max-height: 100%;
@@ -90,7 +90,7 @@
         .login input:focus {
             outline: none;
             color: #444;
-            border-color: #2196f3;
+            border-color: lightgreen;
             border-left-width: 35px;
         }
 
@@ -102,7 +102,7 @@
 
     .login a {
         font-size: 0.8em;
-        color: #2196f3;
+        color: lightgreen;
         text-decoration: none;
     }
 
@@ -119,7 +119,7 @@
         width: 100%;
         height: 84%;
         padding: 10px 10px;
-        background: #2196f3;
+        background: green;
         color: #fff;
         display: inline-block;
         border: none;
@@ -194,7 +194,7 @@ footer {
     }
 }
 
-.gradient-custom {
+body {
     /* fallback for old browsers */
     background: yellow;
     
