@@ -796,41 +796,49 @@ a {
 /* ==========================================================================
     Clase para el buscador de las tablas en las vistas.
 ========================================================================== */
-    #searchbox {
-        background: #eaf8fc;
-        background-image: -moz-linear-gradient(#fff, #d4e8ec);
-        background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #d4e8ec),color-stop(1, #fff));
-        
-        
-        border-width: 1px;
-        border-style: solid;
-        border-color: #c4d9df #a4c3ca lightgreen;
-        width: 60%;
-        height: 52px;
-        padding: 10px;
-        /*margin: -7px auto 30px;*/
-        overflow: hidden;
-        margin-top: 20px;
-    }
+#searchbox {
+    width: 58%;
+    height: 40px;
+    /* padding: 10px; */
+    margin-top: 20px;
+    outline: none;
+    
+}
 
     #buscar, #submit {
         float: left;
     }
 
     #buscar {
-        /* text-transform: uppercase; */
+        /* Estilos básicos */
+        text-transform: uppercase;
         text-align: justify;
         padding: 2px 20px;
         height: 30px;
         width: 100%;
-        /* border: 1px solid #a4c3ca; */
         background: #f1f1f1;
-        /* -moz-border-radius: 50px 3px 3px 50px;
-        border-radius: 50px; */
-        -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-        -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25) inset, 0 1px 0 rgba(255, 255, 255, 1);
+        
+        /* Redondeo */
+        border-radius: 10px; /* Ajusta el valor del borde redondeado */
+    
+        /* Añadir borde gris */
+        border: 1px solid #ccc; /* Borde gris claro */
+    
+        /* Sombra externa suave para dar relieve */
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra externa suave */
     }
+    
+    #buscar:focus {
+        /* Cambiar el color del borde cuando el input esté en foco */
+        border-color: grey; /* Borde azul al enfocarse */
+        
+        /* Cambiar la sombra cuando el input esté en foco */
+        box-shadow: 0 0 5px grey; /* Sombra azul en foco */
+        
+        /* Eliminar el borde predeterminado del navegador al enfocar */
+        outline: none;
+    }
+    
 
     /* ----------------------- */
 
