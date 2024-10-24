@@ -19,15 +19,15 @@
 
 <div class="wrapper">
     <form id="account" method="post" class="login">
-        <p class="logo-login"><img src="~/img/logos.png" class="logo-login" /></p>
+        @* <p class="logo-login"><img src="~/img/logos.png" class="logo-login" /></p> *@
         
         
 
-       <input asp-for="Input.Email" class="form-control" id="Email" onkeyup="FiltrarEmail()" onkeydown="FiltrarEmail()" placeholder="Email" autocomplete="username" aria-required="true" />
+       <input asp-for="Input.Email" class="form-control" id="Email" onkeyup="FiltrarEmail()" onkeydown="FiltrarEmail()"  autocomplete="username" aria-required="true" />
         <i class="fa fa-user"></i>
         <i id="email-invalido-login" class="requeridoLogin ocultar" data-toggle="tooltip" data-placement="bottom" title="El email ingresado no es válido." aria-hidden="true"></i>
 
-        <input asp-for="Input.Password" class="form-control" id="Password" onkeyup="FiltrarContrasena()" onkeydown="FiltrarContrasena()" placeholder="Contraseña" autocomplete="current-password" aria-required="true" />
+        <input asp-for="Input.Password" class="form-control" id="Password" onkeyup="FiltrarContrasena()" onkeydown="FiltrarContrasena()"  autocomplete="current-password" aria-required="true" />
         <i class="fa fa-key"></i>
         <i id="password-invalido" class="requeridoLogin ocultar" data-toggle="tooltip" data-placement="bottom" title="La contraseña ingresada es incorrecta." aria-hidden="true"></i>
 
